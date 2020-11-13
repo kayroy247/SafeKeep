@@ -1,0 +1,106 @@
+.uk-navbar-container {
+    width: 100%;
+    background-color: #001845 !important;
+    color: #ffffff !important;
+}
+.uk-navbar-nav>li>a {
+    color: #ffffff !important;
+    text-transform: capitalize !important;
+}
+.font-size-nav {
+    font-size: 40px !important;
+}
+.font-size-user {
+    font-size: 20px !important;
+}
+.uk-link, a {
+    color: #999999 !important;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px !important;
+}
+.avatar {
+    height: 65px;
+    border-radius: 50%;
+    width: 65px;
+}
+.uk-navbar-dropdown {
+    left: 100px !important;
+}
+hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #9999995c; /* old IE */
+    background-color: #9999995c; /* Modern Browsers */
+}
+.header {
+    font-weight: 400 !important;
+    color: #666 !important;
+}
+.input-fields {
+    border-radius: 5px !important;
+    background-color: #f6f6f6 !important;
+    height: 50px !important;
+}
+.uk-link, a {
+    color: #999999 !important;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+.headerButtonSend {
+    color: #ffffff !important;
+    background-color: #023E7D !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    width: 12%;
+    font-size: 18px !important;
+}
+.headerButtonRequest {
+    color: #ffffff !important;
+    background-color: #7D8597 !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    width: 12%;
+    font-size: 18px !important;
+}
+.headerButtonHistory {
+    color: #ffffff !important;
+    background-color: #023E7D !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    font-size: 25px !important;
+    padding: 10px 20px 10px 20px !important;
+}
+.headerButtonTransfer {
+    color: #ffffff !important;
+    background-color: #7D8597 !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    font-size: 25px !important;
+    padding: 10px 20px 10px 20px !important;
+}
+
+.paddingCards {
+    padding: 0px 40px 0px 40px !important;
+}
+
+.uk-card-title {
+    font-size: 30px !important;
+}
+
+.uk-card-paragraph {
+    font-size: 20px !important;
+}
+
+@media only screen and (max-width: 640px) {
+    uk-grid {
+        display: block !important;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+  }
