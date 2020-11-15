@@ -3,13 +3,13 @@
     background-color: #001845 !important;
     color: #ffffff !important;
 }
-.logo {
-    height: 45px;;
-}
 .uk-navbar-nav>li>a {
     color: #ffffff !important;
     text-transform: capitalize !important;
     font-size: 40px !important;
+}
+.logo {
+    height: 45px;;
 }
 hr {
     width: 30%;

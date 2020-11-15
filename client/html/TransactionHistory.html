@@ -12,32 +12,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/TranscationHiatory.css">
-    <title>Time Lock</title>
+    <link rel="stylesheet" type="text/css" href="../css/wallet.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="../css/uikit.min.css" media="screen"/>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="../js/uikit.min.js"></script>
+    <script src="../js/uikit.min.js"></script>
+    <title>SafeKeep</title>
 </head>
 
 <!-- NavBar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light navFormat   ">
-    
-    <img src="../images/Lockwhite.png" alt="" width="30px" class="mr-2 pl-2 fixed">
-    <a class="navbar-brand text-light fixed " href="#">Transaction History</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-   
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            
-            <li class="nav-item dropdown ">
-                <img src="../images/test.jpg" class="rounded-circle img-fluid float-right rightSpacing aligm-middle ml-3" alt="Cinque" width="40px">
-                <a class="nav-link dropdown-toggle leftSpacing text-light " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Adebayo Daramola
-                </a>
-                <div class="dropdown-menu leftSpacing" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Adebayo</a>
-                    <a class="dropdown-item" href="#">Samanta</a>
-                    <a class="dropdown-item" href="#">Olaoluwa</a>
+<nav class="uk-navbar-container" uk-navbar="mode: click">
+    <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a class="font-size-nav" href=""><img class="uk-margin-right logo" src="../images/LogoWhite.png"></img>Transaction History</a></li>
+            <li></li>
+            <li class="uk-position-right">
+                <a class="font-size-user" href="#"> <img class="avatar uk-margin-right" src="../images/test.jpg"></img>Samantha Bremner <i class="material-icons uk-margin-right uk-margin-small-left">keyboard_arrow_down</i></a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
                 </div>
             </li>
         </ul>

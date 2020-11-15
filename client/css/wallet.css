@@ -7,6 +7,9 @@
     color: #ffffff !important;
     text-transform: capitalize !important;
 }
+.logo {
+    height: 45px;;
+}
 .font-size-nav {
     font-size: 40px !important;
 }
