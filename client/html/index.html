@@ -28,21 +28,9 @@
         <button class="uk-button signUpButton uk-position-center enableEthereumButton">Log In</button>
     </div>
 
-    <!-- The web3 cdn has to be added on anypage in which ethereum is invoked -->
+    <!-- The web3 cdn has to be added on anypage in which web3 is invoked -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.0/web3.min.js"></script>
-    <script>
-        const ethereumButton = document.querySelector('.enableEthereumButton');
-
-        ethereumButton.addEventListener('click', async () => {
-            //Will Start the metamask extension
-            const accounts = await ethereum.request({
-                method: 'eth_requestAccounts'
-            });
-
-            if (accounts[0].length === 42) {
-                window.location.replace("wallet.html");
-            }
-        });
+    <script src="../js/web3-auto.js">    
     </script>
 </body>
 
