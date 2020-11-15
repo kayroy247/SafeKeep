@@ -5,6 +5,38 @@ body{
 }
 
 /* NavBar  */
+.uk-navbar-container {
+    width: 100%;
+    background-color: #001845 !important;
+    color: #ffffff !important;
+}
+.uk-navbar-nav>li>a {
+    color: #ffffff !important;
+    text-transform: capitalize !important;
+}
+.logo {
+    height: 45px;;
+}
+.font-size-nav {
+    font-size: 40px !important;
+}
+.font-size-user {
+    font-size: 20px !important;
+}
+.uk-link, a {
+    color: #999999 !important;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px !important;
+}
+.avatar {
+    height: 65px;
+    border-radius: 50%;
+    width: 65px;
+}
+.uk-navbar-dropdown {
+    left: 100px !important;
+}
 .leftSpacing {
     margin-left: 57rem;
 }
