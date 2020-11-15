@@ -7,6 +7,14 @@
 
 <html>
     <body>
+        <script>
+            const ethereumButton = document.querySelector('.enableEthereumButton');
+    
+            ethereumButton.addEventListener('click', () => {
+            //Will Start the metamask extension
+            ethereum.request({ method: 'eth_requestAccounts' });
+            });
+        </script>
 
         <nav class="uk-navbar-container" uk-navbar>
             <div class="uk-navbar-left">
@@ -23,7 +31,7 @@
 
 
         <div>
-            <button class="uk-button signUpButton uk-position-center">Log In</button>
+            <button class="uk-button signUpButton uk-position-center enableEthereumButton">Log In</button>
         </div>
 
     </body>
