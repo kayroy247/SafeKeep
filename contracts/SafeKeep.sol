@@ -2,13 +2,13 @@
 
 pragma solidity >=0.4.22 <0.8.0;
 // This works only on remix
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
 // This works locally on truffle
 // Uncomment this if you want to test the contract on truffle
-// import 'openzeppelin-solidity/contracts/access/Ownable.sol';
-// import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
+import 'openzeppelin-solidity/contracts/access/Ownable.sol';
+import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 
 contract SafeKeep is Ownable {
    using SafeMath for uint;
