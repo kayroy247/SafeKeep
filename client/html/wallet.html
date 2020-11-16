@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-<link rel="stylesheet" type="text/css" href="../css/wallet.css" media="screen"/>
-<link rel="stylesheet" type="text/css" href="../css/uikit.min.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../css/wallet.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="../css/uikit.min.css" media="screen" />
 <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
@@ -9,42 +9,106 @@
 <script src="../js/uikit.min.js"></script>
 
 <html>
-    <body>
 
-        <nav class="uk-navbar-container" uk-navbar="mode: click">
-            <div class="uk-navbar-left">
-                <ul class="uk-navbar-nav">
-                    <li class="uk-active"><a class="font-size-nav" href=""><img class="uk-margin-right logo" src="../images/LogoWhite.png"></img>Wallet Balance</a></li>
-                    <li></li>
-                    <li class="uk-position-right">
-                        <a class="font-size-user" href="#"> <img class="avatar uk-margin-right" src="../images/test.jpg"></img>Samantha Bremner <i class="material-icons uk-margin-right uk-margin-small-left">keyboard_arrow_down</i></a>
-                        <div class="uk-navbar-dropdown">
-                            <ul class="uk-nav uk-navbar-dropdown-nav">
-                                <li><a href="#">Log Out</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+<body>
 
-        <div class="uk-margin-medium-top uk-text-left uk-margin-medium-left">
-            <h1 class="uk-heading-small header">My Wallet Dashboard 
-                <button class="headerButtonRequest uk-button uk-button-default uk-align-right uk-margin-medium-right uk-margin-top">Request Funds</button>
-                <button class="headerButtonSend uk-button uk-button-default uk-align-right uk-margin-top">Send Funds</button>
-            </h1>
+    <nav class="uk-navbar-container" uk-navbar="mode: click">
+        <div class="uk-navbar-left">
+            <ul class="uk-navbar-nav">
+                <li class="uk-active"><a class="font-size-nav" href=""><img class="uk-margin-right logo"
+                            src="../images/LogoWhite.png"></img>Wallet Balance</a></li>
+                <li></li>
+                <li class="uk-position-right">
+                    <a class="font-size-user" href="#"> <img class="avatar uk-margin-right"
+                            src="../images/test.jpg"></img>Samantha Bremner <i
+                            class="material-icons uk-margin-right uk-margin-small-left">keyboard_arrow_down</i></a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li><a href="#">Log Out</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </nav>
 
-        <hr></hr>
+    <div class="uk-margin-medium-top uk-text-left uk-margin-medium-left">
+        <h1 class="uk-heading-small header">My Wallet Dashboard
+            <a href="#withdraw-modal" uk-toggle>
+                <button
+                    class="headerButtonRequest uk-button uk-button-default uk-align-right uk-margin-medium-right uk-margin-top">Withdraw</button>
+            </a>
+            <a href="#deposit-modal" uk-toggle>
+                <button class="headerButtonSend uk-button uk-button-default uk-align-right uk-margin-top">Deposit
+                    Funds</button>
+            </a>
+        </h1>
+    </div>
 
-        <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match paddingCards" uk-grid>
-            <div>
-                <div class="uk-card uk-card-default uk-card-body">
-                    <h3 class="uk-card-title">Current Total Balance</h3>
-                    <p class="uk-card-paragraph user-balance"></p>
-                </div>
+    <div id="deposit-modal" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Deposit Funds</h2>
             </div>
-            <!-- <div>
+            <div class="uk-modal-body">
+                <form class="uk-form-stacked deposit-form">
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Deposit Amount (ETH)</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input deposit-amount" id="form-stacked-text" type="text" placeholder="0.05">
+                        </div>
+                    </div>        
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Backup Wallet Address</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input backup-address" id="form-stacked-text" type="text" maxlength="42" placeholder="0x12erf....">
+                        </div>
+                    </div>   
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary deposit-button" type="submit">Deposit</button>
+                    </div>     
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="withdraw-modal" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Withdraw Funds</h2>
+            </div>
+            <div class="uk-modal-body">
+                <form class="uk-form-stacked withdraw-form">
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Withdraw Amount (ETH) (Optional)</label>
+                        <label class="uk-form-label uk-text-muted" for="form-stacked-text">Leave blank if you wish to do a full withdrawal</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input withdraw-amount" id="form-stacked-text" type="number" placeholder="">
+                        </div>
+                    </div>  
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary withdraw-button" type="submit">Withdraw</button>
+                    </div>     
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    </hr>
+
+    <div class="uk-flex uk-flex-center uk-child-width-1-3@m uk-grid-small uk-grid-match paddingCards" uk-grid>
+        <div>
+            <div class="uk-card uk-card-default uk-card-body">
+                <h3 class="uk-card-title">Current Total Balance</h3>
+                <p class="uk-card-paragraph user-balance"></p>
+            </div>
+        </div>
+        <!-- <div>
                 <div class="uk-card uk-card-default uk-card-body">
                     <h3 class="uk-card-title">Current Available Balance</h3>
                     <p class="uk-card-paragraph">0.001 ETH</p>
@@ -70,19 +134,21 @@
                     <p class="uk-card-paragraph">0.001 ETH</p>
                 </div>
             </div> -->
-        </div>
+    </div>
 
-        <div class="uk-position-bottom-right">
-            <button class="headerButtonTransfer uk-button uk-button-default uk-align-right uk-margin-medium-right uk-margin-top">Transfer / Withdraw Funds</button>
-        </div>
-        <div class="uk-position-bottom-left">
+    <div class="uk-position-bottom-right">
+        <button
+            class="headerButtonTransfer uk-button uk-button-default uk-align-right uk-margin-medium-right uk-margin-top ping-button">Ping</button>
+    </div>
+    <!-- <div class="uk-position-bottom-left">
             <button class="headerButtonHistory uk-button uk-button-default uk-align-right uk-margin-top">Transaction History</button>
-        </div>        
+        </div>         -->
 
-        <!-- The web3 cdn has to be added on anypage in which web3 is invoked -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.0/web3.min.js"></script>
-        <script src="../contract/SafeKeep.js"></script>
-        <script src="../js/web3-auto.js"></script>
-        <script src="../js/wallet.js"></script>
-    </body>
+    <!-- The web3 cdn has to be added on anypage in which web3 is invoked -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.0/web3.min.js"></script>
+    <script src="../contract/SafeKeep.js"></script>
+    <script src="../js/web3-auto.js"></script>
+    <script src="../js/wallet.js"></script>
+</body>
+
 </html>
