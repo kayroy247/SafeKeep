@@ -1,0 +1,14 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pinging {
+  display: flex;
+  height: 200px;
+  justify-self: center;
+  align-items: center;
+  width: 100%;
+}
