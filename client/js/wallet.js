@@ -89,3 +89,16 @@ withdrawForm.addEventListener("submit", async (event) => {
     console.error(error.message);
   }
 });
+
+//add ping function
+pingButton.addEventListener('click', async (e)=> {
+  const pingMsg = await contract.methods.ping().call();
+  try {
+    Notificate(pingMsg, 'successful');
+  }
+  catch(error){
+    Notificate('something does not seem right', 'not successful');
+    console.log(error);
+  }
+  
+});
