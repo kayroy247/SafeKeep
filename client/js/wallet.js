@@ -13,45 +13,33 @@ const withdrawSpinner = document.querySelector('#withdraw-modal .spinner');
 const contractAddress = '0xa055dFC2190bA3C147D96C69eD5e11442A59525f';
 const hashRegex = /^0x([A-Fa-f0-9]{64})$/;
 let contract;
-let web3;
 
-if (window.ethereum) {
-  web3 = new Web3(window.ethereum);
-}
-
-// SafeKeepABI is available here because SafeKeep.js is imported in wallet.html
-// Get the contract instance.
-// transactionConfirmationBlocks is 3 so that transactions can be confirmed faster 
-// so as to get a transaction response
-contract = new web3.eth.Contract(
-  SafeKeepABI[0].abi,
-  contractAddress,
-  { transactionConfirmationBlocks: 3 }
-);
-
-const getUserBalance = async () => {
-  const userBalance = await contract.methods.getBalance().call();
-  usersBalance.innerText = `${web3.utils.fromWei(userBalance)} ETH`;
-}
 
 const getAccount = async () => {
   const accounts = await web3.eth.getAccounts();
   return accounts;
 }
 
-window.addEventListener('load', async () => {
+const getUserBalance = async () => {
   // const [account] = await getAccount();
+  const userBalance = await contract.methods.getBalance().call();
+  usersBalance.innerText = `${web3.utils.fromWei(userBalance)} ETH`;
+}
+
+// SafeKeepABI is available here because SafeKeep.js is imported in wallet.html
+// Get the contract instance.
+// transactionConfirmationBlocks is 3 so that transactions can be confirmed faster 
+// so as to get a transaction response
+window.addEventListener('load', () => {
+  contract = new web3.eth.Contract(
+    SafeKeepABI[0].abi,
+    contractAddress,
+    { transactionConfirmationBlocks: 3 }
+  );
+
+  checkNetwork();
   getUserBalance();
 })
-
-
-const Notificate = (msg, status, timeout = 3000) => {
-  UIkit.notification(msg, {
-    status,
-    pos: 'top-center',
-    timeout
-  })
-}
 
 const loading = (bool, spinner, btn, text) => {
   spinner.style.display = bool ? 'inline-block' : 'none';
