@@ -1,4 +1,3 @@
-// SafeKeepABI is available here because SafeKeep.js is imported in wallet.html
 const usersBalance = document.querySelector('.user-balance');
 const depositForm = document.querySelector('.deposit-form');
 const withdrawForm = document.querySelector('.withdraw-form');
@@ -6,7 +5,10 @@ const depositAmount = document.querySelector('.deposit-amount');
 const depositButton = document.querySelector('.deposit-button');
 const backupAddress = document.querySelector('.backup-address');
 const withdrawAmount = document.querySelector('.withdraw-amount');
+const withdrawButton = document.querySelector('.withdraw-button');
 const pingButton = document.querySelector('.ping-button');
+const depositSpinner = document.querySelector('#deposit-modal .spinner');
+const withdrawSpinner = document.querySelector('#withdraw-modal .spinner');
 
 const contractAddress = '0xa055dFC2190bA3C147D96C69eD5e11442A59525f';
 const hashRegex = /^0x([A-Fa-f0-9]{64})$/;
@@ -16,19 +18,32 @@ let web3;
 if (window.ethereum) {
   web3 = new Web3(window.ethereum);
 }
+
+// SafeKeepABI is available here because SafeKeep.js is imported in wallet.html
 // Get the contract instance.
 contract = new web3.eth.Contract(
   SafeKeepABI[0].abi,
-  contractAddress
+  contractAddress,
+  { transactionConfirmationBlocks: 3 }
 );
 
-window.addEventListener('load', async () => {
+const getUserBalance = async (account) => {
   const userBalance = await contract.methods.getBalance().call();
-  usersBalance.innerText = `${userBalance} ETH`;
+  usersBalance.innerText = `${web3.utils.fromWei(userBalance)} ETH`;
+}
+
+const getAccount = async () => {
+  const accounts = await web3.eth.getAccounts();
+  return accounts;
+}
+
+window.addEventListener('load', async () => {
+  // const [account] = await getAccount();
+  getUserBalance();
 })
 
 
-const Notificate = (msg, status, timeout = 2500) => {
+const Notificate = (msg, status, timeout = 3000) => {
   UIkit.notification(msg, {
     status,
     pos: 'top-center',
@@ -36,26 +51,32 @@ const Notificate = (msg, status, timeout = 2500) => {
   })
 }
 
+const loading = (bool, spinner, btn, text) => {
+  spinner.style.display = bool ? 'inline-block' : 'none';
+  btn.disabled = bool;
+  btn.innerText = bool ? 'Processing... ' : text;
+}
+
 depositForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const accounts = await web3.eth.getAccounts();
-  const depo = depositAmount.value;
-  const backup = backupAddress.value
-
+  const [account] = await getAccount();
+  let depo = depositAmount.value;
+  let backup = backupAddress.value
 
   if (web3.utils.isAddress(backup) && Number(depo) > 0.001) {
     try {
+      loading(true, depositSpinner, depositButton);
       const amountToSend = web3.utils.toWei(depo, "ether");
-      const trx = await contract.methods.deposit(backup).send({ from: accounts[0], value: amountToSend });
-    
-      if (hashRegex.test(trx.tx)) {
-        const msg = `Transaction was successful
-        https://ropsten.etherscan.io/tx/${trx.tx}
-        `
-        Notificate(msg, 'success', 6000)
-        depositAmount = 0;
-        backupAddress = '';
+      const trx = await contract.methods.deposit(backup).send({ from: account, value: amountToSend });
+      console.log(trx)
+      if (hashRegex.test(trx.transactionHash)) {
+        let msg = `Transaction was successful`
+        Notificate(msg, 'success', 10000)
+        depo = 0;
+        backup = '';
+        loading(false, depositSpinner, depositButton, 'Deposit');
+        document.querySelector('#deposit-modal .uk-modal-close-default').click();
       }
     } catch (error) {
       Notificate('Something went wrong', 'danger')
@@ -72,20 +93,24 @@ depositForm.addEventListener("submit", async (event) => {
 withdrawForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const accounts = await web3.eth.getAccounts();
+  const [account] = await getAccount();
+  console.log(account)
   const withDraw = withdrawAmount.value;
-
+  
   try {
+    loading(true, withdrawSpinner, withdrawButton);
     const amountToWithdraw = web3.utils.toWei(withDraw === '' ? '0' : withDraw, "ether");
-    const trx = await contract.methods.withdraw(amountToWithdraw).send({ from: accounts[0] });
-    if (hashRegex.test(trx.tx)) {
-      const msg = `Transaction was successful
-        https://ropsten.etherscan.io/tx/${trx.tx}
-        `
-      Notificate(msg, 'success', 6000)
+    const trx = await contract.methods.withdraw(amountToWithdraw).send({ from: account });
+    console.log(trx)
+    if (hashRegex.test(trx.transactionHash)) {
+      const msg = `Transaction was successful`
+      Notificate(msg, 'success', 6000);
+      withDraw = 0;
+      loading(false, withdrawSpinner, withdrawButton, 'Withdraw');
+      document.querySelector('#withdraw-modal .uk-modal-close-default').click();
     }
   } catch (error) {
-    Notificate('Something went wrong', 'danger')
+    Notificate('Something went wrong', 'danger');
     console.error(error.message);
   }
 });

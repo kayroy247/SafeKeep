@@ -2,6 +2,7 @@
 
 pragma solidity >=0.4.22 <0.8.0;
 // This works only on remix
+// Uncomment this if you want to test the contract on remix
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 

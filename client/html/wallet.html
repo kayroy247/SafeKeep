@@ -49,7 +49,7 @@
         <div class="uk-modal-dialog">
             <button class="uk-modal-close-default" type="button" uk-close></button>
             <div class="uk-modal-header">
-                <h2 class="uk-modal-title">Deposit Funds</h2>
+                <h2 class="uk-modal-title">Deposit Funds <div uk-spinner class="spinner" style="display: none;"></div></h2>
             </div>
             <div class="uk-modal-body">
                 <form class="uk-form-stacked deposit-form">
@@ -78,7 +78,7 @@
         <div class="uk-modal-dialog">
             <button class="uk-modal-close-default" type="button" uk-close></button>
             <div class="uk-modal-header">
-                <h2 class="uk-modal-title">Withdraw Funds</h2>
+                <h2 class="uk-modal-title">Withdraw Funds <div uk-spinner class="spinner" style="display: none;"></div></h2>
             </div>
             <div class="uk-modal-body">
                 <form class="uk-form-stacked withdraw-form">
@@ -86,7 +86,7 @@
                         <label class="uk-form-label" for="form-stacked-text">Withdraw Amount (ETH) (Optional)</label>
                         <label class="uk-form-label uk-text-muted" for="form-stacked-text">Leave blank if you wish to do a full withdrawal</label>
                         <div class="uk-form-controls">
-                            <input class="uk-input withdraw-amount" id="form-stacked-text" type="number" placeholder="">
+                            <input class="uk-input withdraw-amount" id="form-stacked-text" min="0" step="any" type="number" placeholder="">
                         </div>
                     </div>  
                     <div class="uk-modal-footer uk-text-right">
