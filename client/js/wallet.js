@@ -9,7 +9,7 @@ const getUserBalance = async () => {
     const [account] = await getAccount();
     const userBalance = await contract.methods
       .getBalance()
-      .call({from: account});
+      .call({ from: account });
     usersBalance.innerText = `${web3.utils.fromWei(userBalance, 'ether')} ETH`;
     walletAddress.innerText = account;
     walletAddress.setAttribute('uk-tooltip', account);
@@ -90,7 +90,7 @@ function depositEvent() {
         const amountToSend = web3.utils.toWei(depo, 'ether');
         const trx = await contract.methods
           .deposit(backup)
-          .send({from: account, value: amountToSend});
+          .send({ from: account, value: amountToSend });
 
         if (hashRegex.test(trx.transactionHash)) {
           let msg = `Transaction was successful`;
@@ -130,7 +130,7 @@ function withdrawEvent() {
       );
       const trx = await contract.methods
         .withdraw(amountToWithdraw)
-        .send({from: account});
+        .send({ from: account });
       if (hashRegex.test(trx.transactionHash)) {
         const msg = `Transaction was successful`;
         Notificate(msg, 'success', 6000);
@@ -149,17 +149,19 @@ function withdrawEvent() {
 
 // ping function
 function pingEvent() {
- return pingButton.addEventListener('click', async (e)=> {
-  const pingMsg = await contract.methods.ping().send({ from: accounts[0] });
-  try {
-    Notificate(pingMsg, 'success');
-  }
-  catch(error){
-    Notificate('Something went wrong', 'danger');
-    console.log(error);
-  }
-  
-});
+  return pingButton.addEventListener('click', async (e) => {
+    try {
+      const pingMsg = await contract.methods.ping().send({ from: accounts[0] });
+      if (hashRegex.test(pingMsg.transactionHash)) {
+        Notificate('Ping Successful', 'success');
+      }
+    }
+    catch (error) {
+      Notificate('Something went wrong', 'danger');
+      console.log(error);
+    }
+
+  });
 }
 
 function checkOldPingersEvent() {
@@ -172,7 +174,7 @@ function checkOldPingersEvent() {
         account = accounts[0];
         const checkOldPingersMsg = await contract.methods
           .checkOldPing()
-          .send({from: account});
+          .send({ from: account });
 
         Notificate(checkOldPingersMsg, 'successful');
       }
@@ -180,5 +182,5 @@ function checkOldPingersEvent() {
       Notificate('something went wrong', 'danger');
       console.log(error);
     }
-});
+  });
 };
