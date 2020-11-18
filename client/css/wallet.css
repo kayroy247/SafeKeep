@@ -27,6 +27,14 @@
     border-radius: 50%;
     width: 65px;
 }
+.wallet-address {
+    width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.uk-tooltip {
+    background-color: transparent !important;
+}
 .uk-navbar-dropdown {
     left: 100px !important;
 }

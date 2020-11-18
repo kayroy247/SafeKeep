@@ -11,6 +11,8 @@ const getUserBalance = async () => {
       .getBalance()
       .call({ from: account });
     usersBalance.innerText = `${web3.utils.fromWei(userBalance, 'ether')} ETH`;
+    walletAddress.innerText = account;
+    walletAddress.setAttribute("uk-tooltip", account);
   } catch (error) {
     Notificate('Unable to get balance', 'warning');
     console.log(error);
@@ -35,6 +37,7 @@ let usersBalance,
   pingButton,
   depositSpinner,
   withdrawSpinner,
+  walletAddress,
   hashRegex,
   contract;
 function getDomNodes() {
@@ -46,6 +49,7 @@ function getDomNodes() {
   backupAddress = document.querySelector('.backup-address');
   withdrawAmount = document.querySelector('.withdraw-amount');
   withdrawButton = document.querySelector('.withdraw-button');
+  walletAddress = document.querySelector('.wallet-address');
   pingButton = document.querySelector('.ping-button');
   depositSpinner = document.querySelector('#deposit-modal .spinner');
   withdrawSpinner = document.querySelector('#withdraw-modal .spinner');
