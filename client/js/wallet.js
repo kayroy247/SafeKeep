@@ -149,15 +149,17 @@ function withdrawEvent() {
 
 // ping function
 function pingEvent() {
-  pingButton.addEventListener('click', async (e) => {
-    const pingMsg = await contract.methods.ping().call();
-    try {
-      Notificate(pingMsg, 'successful');
-    } catch (error) {
-      Notificate('something does not seem right', 'not successful');
-      console.log(error);
-    }
-  });
+ return pingButton.addEventListener('click', async (e)=> {
+  const pingMsg = await contract.methods.ping().send({ from: accounts[0] });
+  try {
+    Notificate(pingMsg, 'success');
+  }
+  catch(error){
+    Notificate('Something went wrong', 'danger');
+    console.log(error);
+  }
+  
+});
 }
 
 function checkOldPingersEvent() {
@@ -175,8 +177,8 @@ function checkOldPingersEvent() {
         Notificate(checkOldPingersMsg, 'successful');
       }
     } catch (error) {
-      Notificate('something went wrong', 'NOT successful');
+      Notificate('something went wrong', 'danger');
       console.log(error);
     }
-  });
-}
+});
+};
