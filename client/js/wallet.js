@@ -151,7 +151,8 @@ function withdrawEvent() {
 function pingEvent() {
   return pingButton.addEventListener('click', async (e) => {
     try {
-      const pingMsg = await contract.methods.ping().send({ from: accounts[0] });
+      const [account] = await getAccount();
+      const pingMsg = await contract.methods.ping().send({ from: account });
       if (hashRegex.test(pingMsg.transactionHash)) {
         Notificate('Ping Successful', 'success');
       }
