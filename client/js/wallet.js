@@ -92,7 +92,7 @@ withdrawForm.addEventListener("submit", async (event) => {
 
 //add ping function
 pingButton.addEventListener('click', async (e)=> {
-  const pingMsg = await contract.methods.ping().send({from: accounts[0] });
+  const pingMsg = await contract.methods.ping().send({ from: accounts[0] });
   try {
     Notificate(pingMsg, 'success');
   }
