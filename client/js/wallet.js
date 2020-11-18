@@ -2,29 +2,28 @@
 const getAccount = async () => {
   const accounts = await web3.eth.getAccounts();
   return accounts;
-}
+};
 
 const getUserBalance = async () => {
   try {
     const [account] = await getAccount();
     const userBalance = await contract.methods
       .getBalance()
-      .call({ from: account });
+      .call({from: account});
     usersBalance.innerText = `${web3.utils.fromWei(userBalance, 'ether')} ETH`;
     walletAddress.innerText = account;
-    walletAddress.setAttribute("uk-tooltip", account);
+    walletAddress.setAttribute('uk-tooltip', account);
   } catch (error) {
     Notificate('Unable to get balance', 'warning');
     console.log(error);
   }
-}
+};
 
 const loading = (bool, spinner, btn, text) => {
   spinner.style.display = bool ? 'inline-block' : 'none';
   btn.disabled = bool;
   btn.innerText = bool ? 'Processing... ' : text;
-}
-
+};
 
 let usersBalance,
   depositForm,
@@ -53,6 +52,7 @@ function getDomNodes() {
   pingButton = document.querySelector('.ping-button');
   depositSpinner = document.querySelector('#deposit-modal .spinner');
   withdrawSpinner = document.querySelector('#withdraw-modal .spinner');
+  checkOldPingersButton = document.querySelector('.check-old-pingers');
 
   contractAddress = '0xa055dFC2190bA3C147D96C69eD5e11442A59525f';
   hashRegex = /^0x([A-Fa-f0-9]{64})$/;
@@ -60,23 +60,21 @@ function getDomNodes() {
 
 // SafeKeepABI is available here because SafeKeep.js is imported in wallet.html
 // Get the contract instance.
-// transactionConfirmationBlocks is 3 so that transactions can be confirmed faster 
+// transactionConfirmationBlocks is 3 so that transactions can be confirmed faster
 // so as to get a transaction response
 window.addEventListener('load', () => {
   getDomNodes();
   depositEvent();
   withdrawEvent();
   pingEvent();
-  contract = new web3.eth.Contract(
-    SafeKeepABI[0].abi,
-    contractAddress,
-    { transactionConfirmationBlocks: 3 }
-  );
+  checkOldPingersEvent();
+  contract = new web3.eth.Contract(SafeKeepABI[0].abi, contractAddress, {
+    transactionConfirmationBlocks: 3,
+  });
 
   checkNetwork();
   getUserBalance();
 });
-
 
 function depositEvent() {
   return depositForm.addEventListener('submit', async (event) => {
@@ -84,23 +82,25 @@ function depositEvent() {
 
     const [account] = await getAccount();
     let depo = depositAmount.value;
-    let backup = backupAddress.value
+    let backup = backupAddress.value;
 
     if (web3.utils.isAddress(backup) && Number(depo) > 0.001) {
       try {
         loading(true, depositSpinner, depositButton);
-        const amountToSend = web3.utils.toWei(depo, "ether");
+        const amountToSend = web3.utils.toWei(depo, 'ether');
         const trx = await contract.methods
           .deposit(backup)
-          .send({ from: account, value: amountToSend });
+          .send({from: account, value: amountToSend});
 
         if (hashRegex.test(trx.transactionHash)) {
-          let msg = `Transaction was successful`
-          Notificate(msg, 'success', 6000)
+          let msg = `Transaction was successful`;
+          Notificate(msg, 'success', 6000);
           depo = 0;
           backup = '';
           loading(false, depositSpinner, depositButton, 'Deposit');
-          document.querySelector('#deposit-modal .uk-modal-close-default').click();
+          document
+            .querySelector('#deposit-modal .uk-modal-close-default')
+            .click();
         }
       } catch (error) {
         Notificate('Something went wrong', 'danger');
@@ -130,13 +130,15 @@ function withdrawEvent() {
       );
       const trx = await contract.methods
         .withdraw(amountToWithdraw)
-        .send({ from: account });
+        .send({from: account});
       if (hashRegex.test(trx.transactionHash)) {
-        const msg = `Transaction was successful`
+        const msg = `Transaction was successful`;
         Notificate(msg, 'success', 6000);
         withDraw = 0;
         loading(false, withdrawSpinner, withdrawButton, 'Withdraw');
-        document.querySelector('#withdraw-modal .uk-modal-close-default').click();
+        document
+          .querySelector('#withdraw-modal .uk-modal-close-default')
+          .click();
       }
     } catch (error) {
       Notificate('Something went wrong', 'danger');
@@ -151,9 +153,29 @@ function pingEvent() {
     const pingMsg = await contract.methods.ping().call();
     try {
       Notificate(pingMsg, 'successful');
-    }
-    catch (error) {
+    } catch (error) {
       Notificate('something does not seem right', 'not successful');
+      console.log(error);
+    }
+  });
+}
+
+function checkOldPingersEvent() {
+  checkOldPingersButton.addEventListener('click', async (e) => {
+    console.log(await getAccount());
+    try {
+      const accounts = await getAccount();
+      let account;
+      if (accounts.length) {
+        account = accounts[0];
+        const checkOldPingersMsg = await contract.methods
+          .checkOldPing()
+          .send({from: account});
+
+        Notificate(checkOldPingersMsg, 'successful');
+      }
+    } catch (error) {
+      Notificate('something went wrong', 'NOT successful');
       console.log(error);
     }
   });
