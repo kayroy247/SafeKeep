@@ -27,6 +27,14 @@
     border-radius: 50%;
     width: 65px;
 }
+.wallet-address {
+    width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.uk-tooltip {
+    background-color: transparent !important;
+}
 .uk-navbar-dropdown {
     left: 100px !important;
 }
@@ -58,7 +66,6 @@ hr {
     background-color: #023E7D !important;
     border-radius: 20px !important;
     text-transform: capitalize !important;
-    width: 12%;
     font-size: 18px !important;
 }
 .headerButtonRequest {
@@ -66,7 +73,6 @@ hr {
     background-color: #7D8597 !important;
     border-radius: 20px !important;
     text-transform: capitalize !important;
-    width: 12%;
     font-size: 18px !important;
 }
 .headerButtonHistory {

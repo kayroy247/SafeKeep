@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "dev": "lite-server"
+  },
   "dependencies": {
     "openzeppelin-solidity": "^3.2.0"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
   }
 }
