@@ -4,6 +4,12 @@ const getAccount = async () => {
   return accounts;
 };
 
+const refresh = () => {
+  setTimeout(() => {
+    window.location.reload();
+  }, 6100);
+}
+
 const getUserBalance = async () => {
   try {
     const [account] = await getAccount();
@@ -101,6 +107,7 @@ function depositEvent() {
           document
             .querySelector('#deposit-modal .uk-modal-close-default')
             .click();
+          refresh();
         }
       } catch (error) {
         Notificate('Something went wrong', 'danger');
@@ -120,7 +127,7 @@ function withdrawEvent() {
     event.preventDefault();
 
     const [account] = await getAccount();
-    const withDraw = withdrawAmount.value;
+    let withDraw = withdrawAmount.value;
 
     try {
       loading(true, withdrawSpinner, withdrawButton);
@@ -132,13 +139,14 @@ function withdrawEvent() {
         .withdraw(amountToWithdraw)
         .send({ from: account });
       if (hashRegex.test(trx.transactionHash)) {
-        const msg = `Transaction was successful`;
+        let msg = `Transaction was successful`;
         Notificate(msg, 'success', 6000);
         withDraw = 0;
         loading(false, withdrawSpinner, withdrawButton, 'Withdraw');
         document
           .querySelector('#withdraw-modal .uk-modal-close-default')
           .click();
+          refresh();
       }
     } catch (error) {
       Notificate('Something went wrong', 'danger');
