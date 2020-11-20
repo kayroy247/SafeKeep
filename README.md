@@ -15,3 +15,6 @@
 - To Ping the contract at a time within a month, just click on the ping function
 - To Check for users who haven't pinged in 6 months, the Admin calls the Check Old Pingers function. Only the Admin can call this function.
 - After 6 months of no pings, the contract should automatically disburse the funds to your backup address
+
+### DEMO
+![](SafeKeep.gif)
