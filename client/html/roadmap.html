@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/roadmap.css">
   <link rel="stylesheet" type="text/css" href="../css/uikit.min.css" media="screen" />
   <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -21,31 +22,25 @@
     <div class="uk-navbar-right">
 
       <ul class="uk-navbar-nav">
-        <li class="uk-active"><a href="/client/html/">Home</a></li>
+        <li class=""><a href="/client/html/">Home</a></li>
         <li class=""><a href="about-us.html">About Us</a></li>
-        <li class=""><a href="roadmap.html">Roadmap</a></li>
+        <li class="uk-active"><a href="roadmap.html">Roadmap</a></li>
         <li><a href="#"><button class="uk-button enableEthereumButton uk-button-default">Connect</button></a></li>
       </ul>
-
     </div>
   </nav>
-  <header>
-    <div class="uk-flex">
-      <div class="header-text uk-animation-slide-left-small">
-        <div class="header-info">
-          <h1>An Insurance Policy for your Ethereum and ERC-20 Tokens</h1>
-          <p>SafeKeep is a wallet that guarantees the safety and also access to your token,<br /> no matter the
-            consequences</p>
-          <button class="uk-button enableEthereumButton uk-button-default">Connect</button>
-        </div>
-      </div>
-      <div class="illus">
-        <div class="image-container">
-          <img src="../images/eth-diamond-rainbow.png" alt="">
-        </div>
-      </div>
-    </div>
-  </header>
+
+  <h1 class="roadmap-title">Roadmap</h1>
+
+  <main class="roadmap">
+    <p>Add Support for other ERC-20 Tokens</p>
+    <p>Integrate and partner with Liquidity Pools so users  can earn interests on specified amounts of their funds</p>
+    <p>Add support for including more than one backup address; A user can also set the percentage of their money 
+      they want sent to each backup address or what token to send to which address</p>
+    <p>Add support for other wallets asides MetaMask.</p>
+    <!-- <p>Doggo ipsum long bois lotsa pats blep. What a nice floof ruff super chub very good spot, the neighborhood pupper
+      lotsa pats. Borkdrive shibe shoober what a nice floof, borking doggo.</p> -->
+  </main>
 
 
   <!-- The web3 cdn has to be added on anypage in which web3 is invoked -->
