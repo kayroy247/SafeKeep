@@ -5,7 +5,7 @@
 * `yarn dev` - This starts the local server
 
 ### To Test on Live server
-- Go To  [SafeKeep](https://adoring-golick-36243b.netlify.app/client/html/)
+- Go To  [SafeKeep](https://musing-easley-52355d.netlify.app/client/html/)
 - On metamask, switch to the ropsten network
 - Click on the login button on our page to connect
 - Once you connect, you'll be redirected to your wallet
@@ -17,4 +17,4 @@
 - After 6 months of no pings, the contract should automatically disburse the funds to your backup address
 
 ### DEMO
-![](SafeKeep.gif)
+![]()
