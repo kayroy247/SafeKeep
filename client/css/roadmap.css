@@ -5,8 +5,8 @@
 }
 
 main {
-  min-width: 300px;
-  max-width: 500px;
+  min-width: 80%;
+  max-width: 90%;
   
   margin: 0 auto auto auto;
 }

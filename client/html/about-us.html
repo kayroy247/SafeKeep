@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" type="text/css" href="../css/uikit.min.css" media="screen" />
   <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/home.css">
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
   <script src="../js/uikit.min.js"></script>
   <script src="../js/uikit.min.js"></script>
@@ -15,7 +16,7 @@
 </head>
 
 <body>
-  <nav class="uk-navbar-container uk-navbar-transparent uk-margin" uk-navbar="mode: click">
+  <!-- <nav class="uk-navbar-container uk-navbar-transparent uk-margin" uk-navbar="mode: click">
     <a class="uk-navbar-item uk-logo" href="#"><img src="../images/LogoWhite.png" width="40px" height="100px"
         alt="">&nbsp; SafeKeep</a>
     <div class="uk-navbar-right">
@@ -28,9 +29,37 @@
       </ul>
 
     </div>
+  </nav> -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 py-2" uk-navbar="mode: click">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="../images/LogoWhite.png" width="30px" height="80px"
+        alt="">&nbsp; SafeKeep</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav uk-navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link uk-active" aria-current="page" href="/client/html/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about-us.html">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="roadmap.html">Roadmap</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link">
+              <button class="uk-button enableEthereumButton uk-button-default">Connect</button>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
   <main class="about-body">
-    <div class="aboutUs-container">
+    <div class="row aboutUs-container">
+      <div class="col-md-6">
       <h1>About Us</h1>
       <p><span class="subtitle">What happens to your Cryptocurrencies when you die?</span><br/>
         This is the question that brought about SafeKeep. What happens to your cryptocurrencies when you die? What happens to your cryptocurrencies if you lose your key or your harddrive crashes?
@@ -55,8 +84,15 @@
         Hurray! if you got a success message, then you have officially become a SafeKeep User!.
 
       </p>
+      </div>
+      <div class="col-md-6">
+        <div class="">
+          <img src="../images/LogoBlack.png" alt="" class="litt">
+        </div>
+      </div>
     </div>
   </main>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>

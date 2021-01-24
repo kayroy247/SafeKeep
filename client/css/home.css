@@ -32,6 +32,7 @@ html {
 body {
   font-family: 'Nunito', sans-serif;
   background-color: #F6F9FF;
+  height: 100%;
 }
 
 .uk-navbar-container {
@@ -40,17 +41,23 @@ body {
 }
 
 header {
-  height: 100vh;
+  height: 100%;
   padding-left: 3rem;
   padding-right: 3rem;
 }
 
 
-.header-text,
+.header-text{
+  height: 100%;
+  margin-top: 150px;
+  align-items: center;
+  justify-content: center;
+}
 .illus {
   height: 100vh;
   display: flex;
   flex: 0.5;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
 }
@@ -91,22 +98,44 @@ header {
 /* About Us Styles */
 .about-body {
   padding-left: 3rem;
-  background-image: url('../images/LogoBlack.png');
+  /* background-image: url('../images/LogoBlack.png'); */
   background-repeat: no-repeat;
   background-position: right 30px center;
   -webkit-filter: grayscale(100%);
+  background-size: contain;
+  height: 100%;
   filter: gray;
 }
 
-.aboutUs-container {
+/* .aboutUs-container {
   padding-left: 3rem;
   padding-right: 3rem;
   text-align: left;
   height: 100%;
   width: 800px;
-}
+} */
 
 .subtitle {
   font-weight: 700;
   font-size: larger;
+}
+
+@media (max-width: 480px){
+  .header-info {
+    margin-left: 1rem;
+  }
+ .row{
+   flex-direction: column-reverse;
+ }
+ .image-container{
+   margin-top: 100px;
+   height: 100px;
+ }
+ .litt{
+   margin: 50px 50px;
+   height: 100px;
+ }
+ .header-text{
+  margin-top: 20px;
+}
 }
