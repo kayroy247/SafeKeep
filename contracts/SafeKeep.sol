@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.4.22 <0.8.0;
+pragma solidity >=0.6.0 <0.8.0;
 // This works only on remix
 // Uncomment this if you want to test the contract on remix
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
@@ -10,8 +10,10 @@ pragma solidity >=0.4.22 <0.8.0;
 // Uncomment this if you want to test the contract on truffle
 import 'openzeppelin-solidity/contracts/access/Ownable.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
+import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
+import 'openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol';
 
-contract SafeKeep is Ownable {
+contract SafeKeep is Ownable,ReentrancyGuard {
    using SafeMath for uint;
     
      struct Depositor {
@@ -19,15 +21,34 @@ contract SafeKeep is Ownable {
         uint lastPing;
         address backupAddress;
         bool isUser;
+        IERC20 _token;
+        address[] tokens;
+       
     }
     
-  
+    //mapping (address => mapping (address => uint256)) private _allowances;
+    mapping(address=>mapping( address=>bool)) _hasToken;
+    mapping (address=>mapping(address=>uint)) _tokenBal;  
     mapping(address => Depositor) private depositors;
     address[] depositorsAddresses;
     address[] oldPingers;
     
+    event depositedToken(address indexed _token,uint _amount );
+    event withdrawnToken(address indexed token,uint amount);
+    
     modifier isMinimumDeposit() {
         require((msg.value >= 0.001 ether), "Unsuccessful, The minimum you can deposit is 0.001 ether");
+        _;
+    }
+    
+    modifier aUser(address _check){
+         require(depositors[_check].isUser==true,"not a User");
+        _;
+    }
+
+    modifier hasToken(address _target,address _token) {
+        require(depositors[_target].isUser==true,"not a User");
+        require(_hasToken[_target][_token]==true,"you do not have this token");
         _;
     }
     
@@ -41,12 +62,47 @@ contract SafeKeep is Ownable {
         return depositors[userAddress].isUser;
     }
     
-    function deposit(address backupAddress) external payable isMinimumDeposit isUserBackup(backupAddress) {
+    function depositEther(address backupAddress) external payable isMinimumDeposit isUserBackup(backupAddress) {
         if(isUser(msg.sender)){
          depositorsAddresses.push(msg.sender);
         }
+        
         // Updated this to use SafeMath
-        depositors[msg.sender] = Depositor((depositors[msg.sender].balance.add(msg.value)), block.timestamp, backupAddress, true);
+        
+        
+        depositors[msg.sender].balance+=msg.value;
+        depositors[msg.sender].lastPing=block.timestamp;
+        depositors[msg.sender].backupAddress=backupAddress;
+        depositors[msg.sender].isUser=true;
+        
+    }
+    
+    
+    //amount will have to be infinite for token(address)e.g uint-1
+    function depositToken(uint _amount,address _token) public aUser(msg.sender) nonReentrant(){
+        depositors[msg.sender]._token= IERC20(_token);
+        //holder should call approve from the token contract address and pass in this address as spender
+        depositors[msg.sender]._token.transferFrom(msg.sender,address(this),_amount);
+        depositors[msg.sender].tokens.push(_token);
+        _hasToken[msg.sender][_token]=true;
+        _tokenBal[msg.sender][_token]+=_amount;
+        emit depositedToken(_token,_amount);
+    }
+    
+    
+    function checkTokenBalance(address _token) public aUser(msg.sender) hasToken(msg.sender,_token) view returns(uint){
+        return _tokenBal[msg.sender][_token];
+    }
+    
+    function withdrawToken(address _token,uint _amount) public aUser(msg.sender) hasToken(msg.sender,_token) nonReentrant() returns(uint){
+        require (_tokenBal[msg.sender][_token]>= _amount,"your balance is not enough");
+          depositors[msg.sender]._token= IERC20(_token);
+          depositors[msg.sender]._token.transfer(msg.sender,_amount);
+          if(_tokenBal[msg.sender][_token]==0){
+              _hasToken[msg.sender][_token]=false;
+          }
+          emit withdrawnToken(_token,_amount);
+          return _amount;
     }
     
     
