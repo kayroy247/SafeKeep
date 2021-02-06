@@ -1,0 +1,338 @@
+{
+	"compiler": {
+		"version": "0.7.6+commit.7338295f"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "ADDRESSES_PROVIDER",
+				"outputs": [
+					{
+						"internalType": "contract ILendingPoolAddressesProvider",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllATokens",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "symbol",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "tokenAddress",
+								"type": "address"
+							}
+						],
+						"internalType": "struct IProtocolDataProvider.TokenData[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllReservesTokens",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "symbol",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "tokenAddress",
+								"type": "address"
+							}
+						],
+						"internalType": "struct IProtocolDataProvider.TokenData[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					}
+				],
+				"name": "getReserveConfigurationData",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "decimals",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ltv",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidationThreshold",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidationBonus",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reserveFactor",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "usageAsCollateralEnabled",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "borrowingEnabled",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "stableBorrowRateEnabled",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isActive",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isFrozen",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					}
+				],
+				"name": "getReserveData",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "availableLiquidity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalStableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalVariableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidityRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "variableBorrowRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "stableBorrowRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "averageStableBorrowRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidityIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "variableBorrowIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint40",
+						"name": "lastUpdateTimestamp",
+						"type": "uint40"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					}
+				],
+				"name": "getReserveTokensAddresses",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "aTokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "stableDebtTokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "variableDebtTokenAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserReserveData",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "currentATokenBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentStableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentVariableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "principalStableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "scaledVariableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "stableBorrowRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidityRate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint40",
+						"name": "stableRateLastUpdated",
+						"type": "uint40"
+					},
+					{
+						"internalType": "bool",
+						"name": "usageAsCollateralEnabled",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/Interfaces.sol": "IProtocolDataProvider"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/contracts/Interfaces.sol": {
+			"keccak256": "0x98a889b479a99d445cdaa3b9972440dea6a024c07b1a1247b95bef023f140cfd",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://521e507ed7c9314a12e730554fd78f23236691ed4bf1587e10c55e0a9a92e9ef",
+				"dweb:/ipfs/Qma48M5xEmoUdCx9NXt1LpwefUjjXR2ktBKNpnRZ8FKrZj"
+			]
+		},
+		"localhost/contracts/Libraries.sol": {
+			"keccak256": "0xf68e33c3d3067feada8161f45ba2832a1e461f44d8dc24f2f8252b1100c12484",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://fa49237bdb7565e89e6df4e5794730bccd67fbc701f7a1b6816cc8a9264402b1",
+				"dweb:/ipfs/QmQRyiuuMKcKTdkxEJQpaNFhhzTUpx7WW5SMXFnLMZLDqK"
+			]
+		}
+	},
+	"version": 1
+}

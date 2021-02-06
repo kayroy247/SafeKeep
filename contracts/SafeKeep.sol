@@ -14,23 +14,24 @@ import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 import 'openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol';
 import 'openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol';
-import { ILendingPool, IProtocolDataProvider } from "./Interfaces.sol";
+import { ILendingPool, IProtocolDataProvider,SFKP } from "./Interfaces.sol";
+import './SafeKeepToken.sol';
 
 contract SafeKeep is Ownable,ReentrancyGuard {
    using SafeMath for uint;
    using SafeERC20 for IERC20;
+  address[] private assets = new address[](3);
+    constructor() public {
+    assets[0] = address(0xB597cd8D3217ea6477232F9217fa70837ff667Af); // Kovan AAVE
+    assets[1] = address(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD); // Kovan DAI
+    assets[2] = address(0x7FDb81B0b8a010dd4FFc57C3fecbf145BA8Bd947); //Kovan iSFP
 
-    // address[] private assets = new address[](7);
-    // assets[0] = address(0xB597cd8D3217ea6477232F9217fa70837ff667Af); // Kovan AAVE
-    // assets[1] = address(0x2d12186Fbb9f9a8C28B3FfdD4c42920f8539D738); // Kovan BAT
-    // assets[2] = address(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD); // Kovan DAI
-    // assets[3] = address(0x075A36BA8846C6B6F53644fDd3bf17E5151789DC); // Kovan UNI
-    // assets[4] = address(0xb7c325266ec274fEb1354021D27FA3E3379D840d); // Kovan YFI
-    // assets[5] = address(0xAD5ce863aE3E4E9394Ab43d4ba0D80f419F61789); // Kovan LINK
-    // assets[6] = address(0x7FDb81B0b8a010dd4FFc57C3fecbf145BA8Bd947); // Kovan SNX
-
+    }
+     
+     
     ILendingPool constant lendingPool = ILendingPool(address(0x9FE532197ad76c5a68961439604C037EB79681F0)); // Kovan
     IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x3c73A5E5785cAC854D468F727c606C07488a29D6)); // Kovan
+    SFKP public safekeepInterest= SFKP(assets[2]);
     
      struct Depositor {
         uint balance;
@@ -41,27 +42,33 @@ contract SafeKeep is Ownable,ReentrancyGuard {
         address[] tokens;
        
     }
+   
     
     //mapping (address => mapping (address => uint256)) private _allowances;
     mapping(address=>mapping( address=>bool)) _hasToken;
     mapping (address=>mapping(address=>uint)) _tokenBal;  
     mapping(address => Depositor) private depositors;
+    mapping (address => bool) _whitelisted;
     address[] depositorsAddresses;
     address[] oldPingers;
     
     event depositedToken(address indexed _token,uint _amount );
     event withdrawnToken(address indexed token,uint amount);
+    event tokenWhitelisted(address indexed token);
     
+    //makes sure user ether deposit passes the minimum
     modifier isMinimumDeposit() {
         require((msg.value >= 0.001 ether), "Unsuccessful, The minimum you can deposit is 0.001 ether");
         _;
     }
     
+    //makes sure user is registered
     modifier aUser(address _check){
          require(depositors[_check].isUser==true,"not a User");
         _;
     }
 
+    //makes sure a user has a token(deposited)
     modifier hasToken(address _target,address _token) {
         require(depositors[_target].isUser==true,"not a User");
         require(_hasToken[_target][_token]==true,"you do not have this token");
@@ -71,6 +78,12 @@ contract SafeKeep is Ownable,ReentrancyGuard {
     // Checks if user is trying to set his own address as backup;
     modifier isUserBackup(address _backupAddress) {
         require(msg.sender != _backupAddress, "You cannot use this address as backup");
+        _;
+    }
+    
+    //makes sure token is whitelisted
+    modifier isWhitelisted(address _target){
+        require (_whitelisted[_target]==true,"token not whitelisted");
         _;
     }
     
@@ -93,15 +106,20 @@ contract SafeKeep is Ownable,ReentrancyGuard {
         
     }
     
+    function whitelistToken(address _toWhitelist) public onlyOwner{
+        _whitelisted[_toWhitelist]==true;
+        emit tokenWhitelisted(_toWhitelist);
+    }
     
     //amount will have to be infinite for token(address)e.g uint-1
-    function depositToken(uint _amount,address _token) public aUser(msg.sender) nonReentrant(){
+    function depositToken(uint _amount,address _token) public aUser(msg.sender) isWhitelisted(_token) nonReentrant(){
         depositors[msg.sender]._token= IERC20(_token);
         //holder should call approve from the token contract address and pass in this address as spender
         depositors[msg.sender]._token.transferFrom(msg.sender,address(this),_amount);
         depositors[msg.sender].tokens.push(_token);
         _hasToken[msg.sender][_token]=true;
         _tokenBal[msg.sender][_token]+=_amount;
+        safekeepInterest.mintTo(msg.sender,_amount);
         emit depositedToken(_token,_amount);
     }
     
@@ -114,14 +132,18 @@ contract SafeKeep is Ownable,ReentrancyGuard {
         require (_tokenBal[msg.sender][_token]>= _amount,"your balance is not enough");
           depositors[msg.sender]._token= IERC20(_token);
           depositors[msg.sender]._token.transfer(msg.sender,_amount);
+          safekeepInterest.burnFrom(msg.sender,_amount);
           if(_tokenBal[msg.sender][_token]==0){
               _hasToken[msg.sender][_token]=false;
           }
+          
           emit withdrawnToken(_token,_amount);
           return _amount;
     }
     
-    
+    function checkUserInterest() public view returns(uint256){
+        return safekeepInterest.balanceOf(msg.sender);
+    }
     function withdraw(uint _withdrawAmount) external  {
         uint userBalance = depositors[msg.sender].balance;
         // If user specifies amount to withdraw, it runs the if block and returns
