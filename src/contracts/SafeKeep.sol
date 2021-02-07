@@ -39,7 +39,6 @@ contract SafeKeep is Ownable,ReentrancyGuard {
         bool isUser;
         IERC20 _token;
         address[] tokens;
-       
     }
     
     //mapping (address => mapping (address => uint256)) private _allowances;
@@ -90,7 +89,6 @@ contract SafeKeep is Ownable,ReentrancyGuard {
         depositors[msg.sender].lastPing=block.timestamp;
         depositors[msg.sender].backupAddress=backupAddress;
         depositors[msg.sender].isUser=true;
-        
     }
     
     
@@ -140,6 +138,18 @@ contract SafeKeep is Ownable,ReentrancyGuard {
     
     function getBalance() external view returns(uint balance) {
        return depositors[msg.sender].balance;
+    }
+
+    function getBackupAddress() public view aUser(msg.sender) returns (address backupAddr) {
+        return depositors[msg.sender].backupAddress;
+    }
+    
+    function getLastPing() public view returns (uint lastPingTime) {
+       return depositors[msg.sender].lastPing;
+    }
+    
+    function updateBackupAddress(address _newBackupAddress) public {
+        depositors[msg.sender].backupAddress = _newBackupAddress;
     }
     
     function ping() external  {

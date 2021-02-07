@@ -1,45 +1,52 @@
- .uk-navbar-container {
+.dashboard {
+    background: whitesmoke !important;
+    height: 100vh;
+}
+
+.dashboard .uk-navbar-container {
     width: 100%;
     background-color: #0f1011 !important;
     color: #ffffff !important;
     margin-bottom: 2rem;
 }
- .uk-navbar-nav>li>a {
+.dashboard .uk-navbar-nav>li>a {
     color: #ffffff !important;
     text-transform: capitalize !important;
 }
- .logo {
+.dashboard .logo {
     height: 45px;;
 }
- .font-size-nav {
+.dashboard .font-size-nav {
     font-size: 1.5rem !important;
 }
- .font-size-user {
+.dashboard .font-size-user {
     font-size: 1rem !important;
+    min-height: 80px !important;
+    padding: 15px !important;
 }
- .uk-link, a {
+.dashboard .uk-link, a {
     color: #999999 !important;
     text-decoration: none;
     cursor: pointer;
     font-size: 16px !important;
 }
- .avatar {
-    height: 65px;
+.dashboard .avatar {
+    height: 40px;
     border-radius: 50%;
-    width: 65px;
+    width: 40px;
 }
- .wallet-address {
-    width: 250px;
+.dashboard .wallet-address {
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
- .uk-tooltip {
+.dashboard .uk-tooltip {
     background-color: transparent !important;
 }
- .uk-navbar-dropdown {
+.dashboard .uk-navbar-dropdown {
     left: 100px !important;
 }
- hr {
+.dashboard hr {
     width: 100%;
     border: none;
     height: 1px;
@@ -47,36 +54,36 @@
     color: #9999995c; /* old IE */
     background-color: #9999995c; /* Modern Browsers */
 }
- .header {
+.dashboard .header {
     font-weight: 400 !important;
     color: #666 !important;
 }
- .input-fields {
+.dashboard .input-fields {
     border-radius: 5px !important;
     background-color: #f6f6f6 !important;
     height: 50px !important;
 }
- .uk-link, a {
+.dashboard .uk-link, a {
     color: #999999 !important;
     text-decoration: none;
     cursor: pointer;
     font-size: 20px;
 }
-.headerButtonSend {
+.dashboard .headerButtonSend {
     color: #ffffff !important;
     background-color: #023E7D !important;
     border-radius: 20px !important;
     text-transform: capitalize !important;
     font-size: 18px !important;
 }
-.headerButtonRequest {
+.dashboard .headerButtonRequest {
     color: #ffffff !important;
     background-color: #7D8597 !important;
     border-radius: 20px !important;
     text-transform: capitalize !important;
     font-size: 18px !important;
 }
-.headerButtonHistory {
+.dashboard .headerButtonHistory {
     color: #ffffff !important;
     background-color: #023E7D !important;
     border-radius: 20px !important;
@@ -84,7 +91,7 @@
     font-size: 25px !important;
     padding: 10px 20px 10px 20px !important;
 }
-.headerButtonTransfer {
+.dashboard .headerButtonTransfer {
     color: #ffffff !important;
     background-color: #7D8597 !important;
     border-radius: 20px !important;
@@ -93,7 +100,7 @@
     padding: 10px 20px 10px 20px !important;
 }
 
--container {
+.dashboard .dashboard-container {
     margin-left: auto;
     margin-right: auto;
     width: 1060px;
@@ -101,57 +108,57 @@
     height: 83vh;
 }
 
-.paddingCards {
+.dashboard .paddingCards {
     padding: 0px 40px 0px 40px !important;
 }
 
-.uk-card-title {
+.dashboard .uk-card-title {
     font-size: 25px !important;
 }
 
-.uk-card-paragraph {
+.dashboard .uk-card-paragraph {
     font-size: 20px !important;
 }
 
-.balance-card {
+.dashboard .balance-card {
     padding: 20px !important;
 }
 
-.user-balance {
+.dashboard .user-balance {
     margin-bottom: -5px;
 }
 
-.user-balance-usd {
+.dashboard .user-balance-usd {
     font-size: .8rem !important;
     color: darkgray;
 }
 
-.depWith-button, .user-info-button {
+.dashboard .depWith-button, .user-info-button {
     border-color: black !important;
     margin: 0 !important;
 }
 
-.ping-button {
+.dashboard .ping-button {
     border-color: transparent;
     background: rgb(133, 219, 5);
     color: white !important;
 }
 
-.depWith-button:nth-child(1) {
+.dashboard .depWith-button:nth-child(1) {
     margin-right: 5px !important;
 }
 
-.depWith-button:hover {
+.dashboard .depWith-button:hover {
     color: whitesmoke !important;
     background: black !important;
 }
 
-.user-info {
+.dashboard .user-info {
     font-size: .875rem !important;
 }
 
 @media only screen and (max-width: 640px) {
-    uk-grid {
+    .dashboard uk-grid {
         display: block !important;
         flex-wrap: wrap;
         margin: 0;
