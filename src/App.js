@@ -4,6 +4,7 @@ import Index from './components/Index';
 import AboutUs from './components/About';
 import Roadmap from './components/Roadmap';
 import Dashboard from './components/Dashboard';
+import Admin from './components/Admin';
 // import ProtectedRoute from './components/ProtectedRoute';
 
 function AppContainer() {
@@ -18,6 +19,7 @@ function AppContainer() {
         <Route path="/about-us" component={AboutUs} />
         <Route path="/roadmap" component={Roadmap} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/admin" component={Admin} />
       </Switch>
     </>
   );

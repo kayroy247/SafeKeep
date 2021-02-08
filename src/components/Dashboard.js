@@ -1,37 +1,29 @@
 import { useState, useEffect, useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
-import Blockies from 'react-blockies';
+import { Button } from 'antd';
+import { Blockie } from './Blockies';
 import SFPModal, { WithdrawForm, DepositForm, UpdateBackup } from './Modal';
 
 import SafeKeep from '../contracts/artifacts/SafeKeep.json';
-
-const Blockie = ({ address }) => (
-  <Blockies
-    seed={address}
-    size={10}
-    scale={3}
-    color="#dfe"
-    bgColor="#aaa"
-    spotColor="#000"
-    className="identicon"
-  />
-)
+import ERC20 from '../contracts/artifacts/ERC20.json';
 
 
 const Dashboard = () => {
   const [account, setAccount] = useState('');
   const [loading, setLoading] = useState(false);
   const [safeKeepCon, setSafeKeepCon] = useState({});
+  const [daiCon, setDaiCon] = useState({});
   const [ethBalance, setEthBalance] = useState('0');
+  const [daiTokenBalance, setDaITokenBalance] = useState('0');
   const [bkpAddress, setBkpAddress] = useState('');
   const [lastPing, setLastPing] = useState('');
 
   const [modalType, setModalType] = useState('Update')
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [inputValue, setInputVal] = useState({ withdrawAmount: '', backupAddress: '', depositAmount: '', updateBackup: '' })
-  console.log(inputValue)
+
   const { loadWeb3 } = useAuth();
   const hashRegex = /^0x([A-Fa-f0-9]{64})$/;
   const web3 = window.web3;
@@ -47,9 +39,12 @@ const Dashboard = () => {
         return <WithdrawForm onChange={onChange} />
       }
 
-      default: {
+      case 'Update': {
         return <UpdateBackup onChange={onChange} />
       }
+
+      default:
+        break;
     }
   }
 
@@ -105,6 +100,13 @@ const Dashboard = () => {
     } else {
       window.alert('SafeKeep contract not deployed')
     }
+
+     // DAI Token
+    //  const ERC20Data = { address: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD' }
+    //  const daiToken = new web3.eth.Contract(ERC20, ERC20Data.address)
+    //  setDaiCon(daiToken);
+    //  let daiTokenBalance = await daiToken.methods.balanceOf(userAccount).call()
+    //  setDaITokenBalance(daiTokenBalance.toString())
   }, [])
 
   const depositEth = async () => {
@@ -123,10 +125,12 @@ const Dashboard = () => {
           setInputVal({});
         }
       } catch (error) {
+        setLoading(false);
         Notificate('Something went wrong')
         console.error(error.message);
       }
     } else {
+      setLoading(false);
       const errMsg = 'Check that backup address is valid and deposit is greater than 0.001';
       Notificate(errMsg);
       console.error(errMsg);
@@ -156,6 +160,7 @@ const Dashboard = () => {
         setInputVal({})
       }
     } catch (error) {
+      setLoading(false);
       Notificate('Something went wrong');
       console.error(error.message);
     }
@@ -180,6 +185,7 @@ const Dashboard = () => {
         setInputVal({})
       }
     } catch (error) {
+      setLoading(false);
       Notificate('Something went wrong');
       console.error(error.message);
     }
@@ -243,7 +249,7 @@ const Dashboard = () => {
             <div className="uk-card uk-card-default uk-card-body balance-card">
               <h3 className="uk-card-title">Ethereum Balance</h3>
               <p className="uk-card-paragraph user-balance">{`${web3?.utils?.fromWei(ethBalance, 'ether')} ETH`}</p>
-              <span className=" user-balance-usd">0 USD</span>
+              {/* <span className=" user-balance-usd">0 USD</span> */}
               <div className=" uk-text-left uk-margin-medium-left">
                 {/* <a href="#withdraw-modal" uk-toggle> */}
                 <button onClick={() => {
@@ -264,11 +270,10 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="uk-card uk-margin-medium-top uk-card-default uk-card-body balance-card">
-              <h3 className="uk-card-title">ERC20 Balance</h3>
-              <p className="uk-card-paragraph user-balance">0 ERC</p>
+              <h3 className="uk-card-title">DAI Balance</h3>
+              <p className="uk-card-paragraph user-balance">0 DAI</p>
               {/* <span class=" user-balance-usd">0 USD</span> */}
               <div className=" uk-text-left uk-margin-medium-left">
-
                 <button onClick={() => {
                   setModalType('Withdraw')
                   showModal()
@@ -291,15 +296,19 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="uk-width-1-3@s" style={{ marginLeft: 'auto' }}>
-            <div className="uk-card uk-card-default uk-card-body balance-card" style={{ overflow: 'hidden' }}>
+            <div className="uk-card uk-card-default uk-card-body balance-card">
               <h3 className="uk-card-title">Backup Address</h3>
-              <span className="uk-card-paragraph user-info" style={{ width: '20px !important;', textOverflow: 'ellipsis', overflow: 'hidden' }}>{bkpAddress}</span>
+              <p className="uk-card-paragraph user-info" style={{ width: '20px !important;', whiteSpace: 'nowrap', padding: '5px', resize: 'horizontal', textOverflow: 'ellipsis', overflow: 'hidden' }}>{bkpAddress}</p>
               <div className=" uk-text-left uk-margin-medium-left">
-                <button onClick={showModal} className="uk-button user-info-button uk-button-primary uk-align-right" style={{ border: 'hidden' }}>
+                <button onClick={() => {
+                  setModalType('Update')
+                  showModal()
+                }} className="uk-button user-info-button uk-button-primary uk-align-right" style={{ border: 'hidden' }}>
                   Update
                 </button>
               </div>
             </div>
+
             <div className="uk-card uk-margin-medium-top uk-card-default uk-card-body balance-card">
               <h3 className="uk-card-title">Last Ping</h3>
               <p className="uk-card-paragraph user-info">{lastPing}</p>
@@ -310,6 +319,9 @@ const Dashboard = () => {
                 </button>
               </div>
             </div>
+            <Link to="/admin">
+              <Button className="uk-margin-medium-right uk-margin-medium-top" type="primary">Go To Admin &gt;</Button>
+            </Link>
           </div>
         </div>
         {/* <div class="">

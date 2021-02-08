@@ -35,15 +35,15 @@ const Home = () => {
         <div className="uk-flex">
           <div className="header-text uk-animation-slide-left-small">
             <div className="header-info">
-              <h1>An Insurance Policy for your Ethereum and ERC-20 Tokens</h1>
-              <p>SafeKeep is a wallet that guarantees the safety and also access to your token,<br /> no matter the
-                  consequences</p>
+              <h1 className="header-main">SafeKeep</h1>
+              <h4>Guaranteed storage and safety backup for your Ethereum &<br /> ERC-20 tokens</h4>
               <button onClick={handleConnect} className="uk-button enableEthereumButton uk-button-default">{account.length ? 'Connected' : 'Connect'}</button>
+              <p className="sponsored-by">Built on  <img src="../images/Aave.png" width="55px"  alt="Aave logo"/></p>
             </div>
           </div>
           <div className="illus">
             <div className="image-container">
-              <img src="../images/eth-diamond-rainbow.png" alt="" />
+              <img src="../images/eth-diamond-rainbow.png" alt="eth logo" />
             </div>
           </div>
         </div>

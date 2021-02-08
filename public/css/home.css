@@ -62,12 +62,24 @@ header {
   margin-left: 5rem;
 }
 
+.header-main {
+  font-size: 7rem;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
 .image-container {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: float 6s ease-in-out infinite;
+}
+
+.sponsored-by {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 25px;
 }
 
 .image-container img {
