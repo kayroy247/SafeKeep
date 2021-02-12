@@ -1,13 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useReducer } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button } from 'antd';
 import { Blockie } from './Blockies';
-import SFPModal, { WithdrawForm, DepositForm, UpdateBackup } from './Modal';
+import smartTrim from '../util/smartTrim';
+import SFPModal, { WithdrawForm, DepositForm, UpdateBackup, WithdrawDaiForm, DepositDaiForm } from './Modal';
 
 import SafeKeep from '../contracts/artifacts/SafeKeep.json';
 import ERC20 from '../contracts/artifacts/ERC20.json';
+import SFKP from '../contracts/artifacts/SFKP.json';
+
 
 
 const Dashboard = () => {
@@ -16,17 +19,29 @@ const Dashboard = () => {
   const [safeKeepCon, setSafeKeepCon] = useState({});
   const [daiCon, setDaiCon] = useState({});
   const [ethBalance, setEthBalance] = useState('0');
-  const [daiTokenBalance, setDaITokenBalance] = useState('0');
+  const [tokenBalance, setTokenBalance] = useState('0');
+  const [sfkpBalance, setSfkpBalance] = useState('0');
   const [bkpAddress, setBkpAddress] = useState('');
   const [lastPing, setLastPing] = useState('');
-
-  const [modalType, setModalType] = useState('Update')
+  const [modalType, setModalType] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [inputValue, setInputVal] = useState({ withdrawAmount: '', backupAddress: '', depositAmount: '', updateBackup: '' })
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [inputValue, setInputVal] = useState({
+    withdrawAmount: '',
+    backupAddress: '',
+    depositAmount: '',
+    updateBackup: '',
+    withdrawDaiAmount: '',
+    depositDaiAmount: ''
+  })
 
   const { loadWeb3 } = useAuth();
+
   const hashRegex = /^0x([A-Fa-f0-9]{64})$/;
   const web3 = window.web3;
+
+  const kDaiData = { address: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD' } //kDai
+  // const mDaiData = { address: '0x2394cb90FC30EaE5cFdeb49db401368a2aa5188F' } //mDai
 
 
   const getModal = (modalType, onChange) => {
@@ -37,6 +52,13 @@ const Dashboard = () => {
 
       case 'Withdraw': {
         return <WithdrawForm onChange={onChange} />
+      }
+
+      case 'Deposit DAI': {
+        return <DepositDaiForm onChange={onChange} />
+      }
+      case 'Withdraw DAI': {
+        return <WithdrawDaiForm onChange={onChange} />
       }
 
       case 'Update': {
@@ -67,11 +89,17 @@ const Dashboard = () => {
       return withdrawEth();
     } else if (modalType === 'Deposit') {
       return depositEth();
+    } else if (modalType === 'Deposit DAI') {
+      return depositDai();
+    } else if (modalType === 'Withdraw DAI') {
+      return withdrawDai();
     }
     return updateBackupFn();
   };
 
   const handleCancel = () => {
+    setLoading(false)
+    setInputVal({});
     setIsModalVisible(false);
   };
 
@@ -79,35 +107,41 @@ const Dashboard = () => {
     setInputVal(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
   }
 
+  const getAccount = async () => {
+    const [userAccount] = await window.web3.eth.getAccounts();
+    setAccount(userAccount);
+    return userAccount
+  }
+
+  window.ethereum.on('accountsChanged', function () {
+    getAccount();
+  });
+
   const loadData = useCallback(async () => {
     const web3 = window.web3;
-    const [userAccount] = await web3.eth.getAccounts();
-    setAccount(userAccount)
+    const userAccount = await getAccount();
 
-    // const networkId = await window.web3.eth.net.getId();
-    const safeKeepData = { address: '0x60E26ee03023b5963FAb0655E6b263CC3D1Fd67C' }
-    //Load SafeKeep
-    // const safeKeepData = networkId && SafeKeep.networks[networkId];
-    if (safeKeepData) {
+      // DAI Token
+      const daiToken = new web3.eth.Contract(ERC20.abi, kDaiData.address)
+      setDaiCon(daiToken);
+
+    const safeKeepData = { address: '0x1Bf70Ba5741C66746C28AE7D27F3ce0CFB63DA60' }
+    //Load SafeKeep   
       const safeKeep = new web3.eth.Contract(SafeKeep.abi, safeKeepData.address)
       setSafeKeepCon(safeKeep);
-      let etherBalance = await safeKeep.methods.getBalance().call({ from: userAccount });
-      setEthBalance(etherBalance.toString())
+      console.log(safeKeep.methods)
       let bkpAddress = await safeKeep.methods.getBackupAddress().call({ from: userAccount });
       setBkpAddress(bkpAddress)
       let lstPing = await safeKeep.methods.getLastPing().call({ from: userAccount });
       setLastPing(lstPing);
-    } else {
-      window.alert('SafeKeep contract not deployed')
-    }
-
-     // DAI Token
-    //  const ERC20Data = { address: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD' }
-    //  const daiToken = new web3.eth.Contract(ERC20, ERC20Data.address)
-    //  setDaiCon(daiToken);
-    //  let daiTokenBalance = await daiToken.methods.balanceOf(userAccount).call()
-    //  setDaITokenBalance(daiTokenBalance.toString())
-  }, [])
+      let etherBalance = await safeKeep.methods.getBalance().call({ from: userAccount });
+      setEthBalance(etherBalance.toString())
+      let userInterest = await safeKeep.methods.checkUserInterest().call({ from: userAccount })
+      setSfkpBalance(userInterest.toString());
+      let daiBalance = await safeKeep.methods.checkTokenBalance(kDaiData.address).call({ from: userAccount });
+      setTokenBalance(daiBalance.toString())
+  
+  }, [kDaiData.address])
 
   const depositEth = async () => {
     if (web3.utils.isAddress(`${inputValue.backupAddress}`) && Number(inputValue.depositAmount) > 0.001) {
@@ -123,6 +157,8 @@ const Dashboard = () => {
           setLoading(false);
           handleCancel();
           setInputVal({});
+          let etherBalance = await safeKeepCon.methods.getBalance().call({ from: account });
+          setEthBalance(etherBalance.toString())
         }
       } catch (error) {
         setLoading(false);
@@ -138,8 +174,6 @@ const Dashboard = () => {
   };
 
   const withdrawEth = async () => {
-    // event.preventDefault();
-
     let withDraw = `${inputValue.withdrawAmount}`;
 
     try {
@@ -154,7 +188,50 @@ const Dashboard = () => {
       if (hashRegex.test(trx.transactionHash)) {
         let msg = `Transaction was successful`;
         Notificate(msg);
-        withDraw = 0;
+        setLoading(false);
+        handleCancel()
+        setInputVal({})
+        let etherBalance = await safeKeepCon.methods.getBalance().call({ from: account });
+        setEthBalance(etherBalance.toString())
+      }
+    } catch (error) {
+      setLoading(false);
+      Notificate('Something went wrong');
+      console.error(error.message);
+    }
+  }
+
+  const depositDai = () => {
+    setLoading(true)
+    const amountToSend = web3.utils.toWei(`${inputValue.depositDaiAmount}`, 'ether');
+    daiCon.methods.approve(safeKeepCon._address, amountToSend).send({ from: account }).on('transactionHash', (hash) => {
+      safeKeepCon.methods.depositToken(amountToSend, kDaiData.address).send({ from: account }).on('transactionHash', async (hash) => {
+        let daiBalance = await safeKeepCon.methods.checkTokenBalance(kDaiData.address).call({ from: account });
+        setTokenBalance(daiBalance.toString())
+        setLoading(false)
+        Notificate('Transaction Successful');
+        handleCancel()
+        setInputVal({})
+      })
+    })
+  }
+
+  const withdrawDai = async () => {
+    setLoading(true);
+    let withDraw = `${inputValue.withdrawDaiAmount}`;
+
+    try {
+      setLoading(true);
+      const amountToWithdraw = web3.utils.toWei(
+        withDraw === '' ? '0' : withDraw,
+        'ether'
+      );
+      const trx = await safeKeepCon.methods
+        .withdrawToken(kDaiData.address, amountToWithdraw)
+        .send({ from: account });
+      if (hashRegex.test(trx.transactionHash)) {
+        let msg = `Transaction was successful`;
+        Notificate(msg);
         setLoading(false);
         handleCancel()
         setInputVal({})
@@ -207,7 +284,7 @@ const Dashboard = () => {
   useEffect(() => {
     loadWeb3()
     loadData()
-  }, [loadWeb3, loadData, ethBalance])
+  }, [loadWeb3, loadData, ethBalance, tokenBalance, account])
 
   return (
     <div className="dashboard">
@@ -229,7 +306,7 @@ const Dashboard = () => {
             <li className="uk-position-right">
               <div className="font-size-user" style={{ display: 'flex', alignItems: 'center' }}>
                 <Blockie address={account} />
-                <span className="wallet-address uk-margin-small-left">{account}</span>
+                <span className="wallet-address uk-margin-small-left">{smartTrim(account, 15)}</span>
                 {/* <i className="material-icons uk-margin-right uk-margin-small-left">keyboard_arrow_down</i> */}
               </div>
               {/* <div className="uk-navbar-dropdown">
@@ -271,18 +348,18 @@ const Dashboard = () => {
             </div>
             <div className="uk-card uk-margin-medium-top uk-card-default uk-card-body balance-card">
               <h3 className="uk-card-title">DAI Balance</h3>
-              <p className="uk-card-paragraph user-balance">0 DAI</p>
+              <p className="uk-card-paragraph user-balance">{`${web3?.utils?.fromWei(tokenBalance, 'ether')} DAI`}</p>
               {/* <span class=" user-balance-usd">0 USD</span> */}
               <div className=" uk-text-left uk-margin-medium-left">
                 <button onClick={() => {
-                  setModalType('Withdraw')
+                  setModalType('Withdraw DAI')
                   showModal()
                 }} className="uk-button depWith-button uk-button-default uk-align-right">
                   Withdraw
                   </button>
 
                 <button onClick={() => {
-                  setModalType('Deposit')
+                  setModalType('Deposit DAI')
                   showModal()
                 }} className="uk-button depWith-button uk-button-default uk-align-right">
                   Deposit
@@ -291,14 +368,14 @@ const Dashboard = () => {
             </div>
             <div className="uk-card uk-margin-medium-top uk-card-default uk-card-body balance-card">
               <h3 className="uk-card-title">SFP Balance</h3>
-              <p className="uk-card-paragraph user-balance">0 SFP</p>
+              <p className="uk-card-paragraph user-balance">{`${web3?.utils?.fromWei(sfkpBalance, 'ether')} SFP`}</p>
               {/* <span class=" user-balance-usd">0 USD</span> */}
             </div>
           </div>
           <div className="uk-width-1-3@s" style={{ marginLeft: 'auto' }}>
             <div className="uk-card uk-card-default uk-card-body balance-card">
               <h3 className="uk-card-title">Backup Address</h3>
-              <p className="uk-card-paragraph user-info" style={{ width: '20px !important;', whiteSpace: 'nowrap', padding: '5px', resize: 'horizontal', textOverflow: 'ellipsis', overflow: 'hidden' }}>{bkpAddress}</p>
+              <p className="uk-card-paragraph user-info" style={{ padding: '5px' }}>{smartTrim(bkpAddress, 15)}</p>
               <div className=" uk-text-left uk-margin-medium-left">
                 <button onClick={() => {
                   setModalType('Update')

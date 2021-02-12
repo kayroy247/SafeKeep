@@ -45,7 +45,7 @@ contract iSFP is IERC20,Ownable {
 
 
     modifier onlyFromVault() {
-        require(msg.sender == vaultAddress, "Did not originate from Snowflake.");
+        require(msg.sender == vaultAddress, "Did not originate from Vault.");
         _;
     }
     
@@ -164,13 +164,13 @@ function setVaultAddress(address _vault) public onlyOwner {
         return true;
     }
 
-function burnFrom(address _from, uint256 amount) external onlyFromVault {
-    _burn(_from,amount);
-}
+    function burnFrom(address _from, uint256 amount) external onlyFromVault {
+        _burn(_from,amount);
+    }
 
-function mintTo(address _to,uint256 amount) external onlyFromVault {
-    _mint(_to,amount);
-}
+    function mintTo(address _to,uint256 amount) external onlyFromVault {
+        _mint(_to,amount);
+    }
     /**
      * @dev Atomically increases the allowance granted to `spender` by the caller.
      *

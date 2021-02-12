@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.7.6+commit.7338295f"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/Libraries.sol": "DataTypes"
+			"localhost/src/contracts/Libraries.sol": "DataTypes"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -32,12 +32,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/Libraries.sol": {
-			"keccak256": "0xf68e33c3d3067feada8161f45ba2832a1e461f44d8dc24f2f8252b1100c12484",
+		"localhost/src/contracts/Libraries.sol": {
+			"keccak256": "0x681dd11b60766003ff82bfb63e3a0f3840d4238a02e935b5759727eb22c5e2be",
 			"license": "agpl-3.0",
 			"urls": [
-				"bzz-raw://fa49237bdb7565e89e6df4e5794730bccd67fbc701f7a1b6816cc8a9264402b1",
-				"dweb:/ipfs/QmQRyiuuMKcKTdkxEJQpaNFhhzTUpx7WW5SMXFnLMZLDqK"
+				"bzz-raw://1918b98204622f714a9021b5051a2cca7d250ddcb4f7f7577b0e86d96257c8d4",
+				"dweb:/ipfs/QmVmni8seQTwaRZa4NLgHBCiQeec6TDRd6bcPv5Wr4JLfs"
 			]
 		}
 	},

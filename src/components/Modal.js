@@ -37,6 +37,36 @@ export const WithdrawForm = ({ onChange }) => {
     </form>
   )
 }
+export const DepositDaiForm = ({ onChange }) => {
+  return (
+    <form className="uk-form-stacked deposit-form">
+      <div className="uk-margin">
+        <label className="uk-form-label" htmlFor="form-stacked-text">Deposit Amount (DAI)</label>
+        <div className="uk-form-controls">
+          <input onChange={onChange} name="depositDaiAmount" className="uk-input deposit-amount" id="form-stacked-text" type="text" placeholder="0.05" />
+        </div>
+      </div>
+    </form>
+  )
+}
+
+export const WithdrawDaiForm = ({ onChange }) => {
+  return (
+    <form className="uk-form-stacked withdraw-form">
+      <div className="uk-margin">
+        <label className="uk-form-label" htmlFor="form-stacked-text">
+          Withdraw Amount (DAI)
+          </label>
+        {/* <label className="uk-form-label uk-text-muted" htmlFor="form-stacked-text">Leave blank if you wish
+        to do
+                      a full withdrawal</label> */}
+        <div className="uk-form-controls">
+          <input className="uk-input withdraw-amount" onChange={onChange} name="withdrawDaiAmount" id="form-stacked-text" min={0} step="any" type="number" placeholder />
+        </div>
+      </div>
+    </form>
+  )
+}
 
 export const UpdateBackup = ({ onChange }) => {
   return (

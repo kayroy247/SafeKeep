@@ -6,7 +6,7 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [account, setAccount] = useState('');
   const [networkID, setNetworkID] = useState(0);
-  const [network] = useState(42)
+  const network = 42;
 
    // Checks if network is locked on kovan
    const checkNetwork = useCallback(async () => {

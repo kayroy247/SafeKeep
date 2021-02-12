@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.7.6+commit.7338295f"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -394,7 +394,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/Interfaces.sol": "ILendingPoolAddressesProvider"
+			"localhost/src/contracts/Interfaces.sol": "ILendingPoolAddressesProvider"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -408,20 +408,20 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/Interfaces.sol": {
-			"keccak256": "0x98a889b479a99d445cdaa3b9972440dea6a024c07b1a1247b95bef023f140cfd",
+		"localhost/src/contracts/Interfaces.sol": {
+			"keccak256": "0x0f7dc0ba2c1ac4c1481ed7c362b8261ef26c158de958e7a9f0ff5cb43b2ba7c2",
 			"license": "agpl-3.0",
 			"urls": [
-				"bzz-raw://521e507ed7c9314a12e730554fd78f23236691ed4bf1587e10c55e0a9a92e9ef",
-				"dweb:/ipfs/Qma48M5xEmoUdCx9NXt1LpwefUjjXR2ktBKNpnRZ8FKrZj"
+				"bzz-raw://2153f8e2c94daed1aa61cf2dd29a92bdeb8ce55d9c820fd5683d93b50071470d",
+				"dweb:/ipfs/QmaJhnjXuBqX36iRcqrTL6yoCwZRkfjVtaA8BCt212SNcu"
 			]
 		},
-		"localhost/contracts/Libraries.sol": {
-			"keccak256": "0xf68e33c3d3067feada8161f45ba2832a1e461f44d8dc24f2f8252b1100c12484",
+		"localhost/src/contracts/Libraries.sol": {
+			"keccak256": "0x681dd11b60766003ff82bfb63e3a0f3840d4238a02e935b5759727eb22c5e2be",
 			"license": "agpl-3.0",
 			"urls": [
-				"bzz-raw://fa49237bdb7565e89e6df4e5794730bccd67fbc701f7a1b6816cc8a9264402b1",
-				"dweb:/ipfs/QmQRyiuuMKcKTdkxEJQpaNFhhzTUpx7WW5SMXFnLMZLDqK"
+				"bzz-raw://1918b98204622f714a9021b5051a2cca7d250ddcb4f7f7577b0e86d96257c8d4",
+				"dweb:/ipfs/QmVmni8seQTwaRZa4NLgHBCiQeec6TDRd6bcPv5Wr4JLfs"
 			]
 		}
 	},

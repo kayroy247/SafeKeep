@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.7.6+commit.7338295f"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -195,6 +195,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "getBackupAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "backupAddr",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "getBalance",
 				"outputs": [
 					{
@@ -214,6 +227,38 @@
 						"internalType": "uint256",
 						"name": "contractBalance",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getLastPing",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "lastPingTime",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					}
+				],
+				"name": "isTokenWhitelisted",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
@@ -317,6 +362,19 @@
 			{
 				"inputs": [],
 				"name": "transferToBackupAddresses",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_newBackupAddress",
+						"type": "address"
+					}
+				],
+				"name": "updateBackupAddress",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -447,7 +505,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/SafeKeep.sol": "SafeKeep"
+			"localhost/src/contracts/SafeKeep.sol": "SafeKeep"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -461,92 +519,92 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/contracts/Interfaces.sol": {
-			"keccak256": "0x98a889b479a99d445cdaa3b9972440dea6a024c07b1a1247b95bef023f140cfd",
+		"localhost/src/contracts/Interfaces.sol": {
+			"keccak256": "0x0f7dc0ba2c1ac4c1481ed7c362b8261ef26c158de958e7a9f0ff5cb43b2ba7c2",
 			"license": "agpl-3.0",
 			"urls": [
-				"bzz-raw://521e507ed7c9314a12e730554fd78f23236691ed4bf1587e10c55e0a9a92e9ef",
-				"dweb:/ipfs/Qma48M5xEmoUdCx9NXt1LpwefUjjXR2ktBKNpnRZ8FKrZj"
+				"bzz-raw://2153f8e2c94daed1aa61cf2dd29a92bdeb8ce55d9c820fd5683d93b50071470d",
+				"dweb:/ipfs/QmaJhnjXuBqX36iRcqrTL6yoCwZRkfjVtaA8BCt212SNcu"
 			]
 		},
-		"localhost/contracts/Libraries.sol": {
-			"keccak256": "0xf68e33c3d3067feada8161f45ba2832a1e461f44d8dc24f2f8252b1100c12484",
+		"localhost/src/contracts/Libraries.sol": {
+			"keccak256": "0x681dd11b60766003ff82bfb63e3a0f3840d4238a02e935b5759727eb22c5e2be",
 			"license": "agpl-3.0",
 			"urls": [
-				"bzz-raw://fa49237bdb7565e89e6df4e5794730bccd67fbc701f7a1b6816cc8a9264402b1",
-				"dweb:/ipfs/QmQRyiuuMKcKTdkxEJQpaNFhhzTUpx7WW5SMXFnLMZLDqK"
+				"bzz-raw://1918b98204622f714a9021b5051a2cca7d250ddcb4f7f7577b0e86d96257c8d4",
+				"dweb:/ipfs/QmVmni8seQTwaRZa4NLgHBCiQeec6TDRd6bcPv5Wr4JLfs"
 			]
 		},
-		"localhost/contracts/SafeKeep.sol": {
-			"keccak256": "0x37147fc40e3afcc5982b81fe24ffe4a88848112a5469fb797b418e0b994da863",
+		"localhost/src/contracts/SafeKeep.sol": {
+			"keccak256": "0x33878a0817823314ab906674732d10b44b9617c7db09df7abd2a27a935dbb657",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0ae31a5160768ea0680e63ef1580e84c63bc9a8d52a8c30ab3572707a5d713bc",
-				"dweb:/ipfs/QmeCmcmwC5fPwAZg7VWfUmywGAzZKdejeaxJQefiYMZv6c"
+				"bzz-raw://29aac8c0d5ef397fa324916703e485a2088ebe181084e975cca096c02a78b2f7",
+				"dweb:/ipfs/QmNdiKE7WbAsx5YqU971g8RcouXxX5a6M7hrYTLZdsXysR"
 			]
 		},
-		"localhost/contracts/SafeKeepToken.sol": {
-			"keccak256": "0xdc0949743b8dcdd5b9568977e326743d7ede541638465ddc1b9e76a58c4a5e52",
+		"localhost/src/contracts/SafeKeepToken.sol": {
+			"keccak256": "0xec52226bb3f32a061652334eb80037403531857429ff89e67cb0b571ccfd7083",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://51d520bd7295bc46daeca470d9755506ae2b3138c5e4c3aee2e86581783183a0",
-				"dweb:/ipfs/QmeirskV5TjLYXbX9N1axyaw8Ej2v9bMbRceejSzn4CPPK"
+				"bzz-raw://0a86eab33220bcddcd64cdea9c1a72fae014e005b73c0a1a39a4935bf8cfd94d",
+				"dweb:/ipfs/QmdT2uCC14kx4Y75e2J7TL2PdUGjwQDcfiS8MGuexRfmo1"
 			]
 		},
 		"openzeppelin-solidity/contracts/GSN/Context.sol": {
-			"keccak256": "0x8d3cb350f04ff49cfb10aef08d87f19dcbaecc8027b0bed12f3275cd12f38cf0",
+			"keccak256": "0xdb26cbf4d028490f49831a7865c2fe1b28db44b535ca8d343785a3b768aae183",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ded47ec7c96750f9bd04bbbc84f659992d4ba901cb7b532a52cd468272cf378f",
-				"dweb:/ipfs/QmfBrGtQP7rZEqEg6Wz6jh2N2Kukpj1z5v3CGWmAqrzm96"
+				"bzz-raw://840b14ce0315c47d49ba328f1f9fa7654ded1c9e1559e6c5e777a7b2dc28bf0a",
+				"dweb:/ipfs/QmTLLabn4wcfGro9LEmUXUN2nwKqZSotXMvjDCLXEnLtZP"
 			]
 		},
 		"openzeppelin-solidity/contracts/access/Ownable.sol": {
-			"keccak256": "0xf7c39c7e6d06ed3bda90cfefbcbf2ddc32c599c3d6721746546ad64946efccaa",
+			"keccak256": "0x4bd6402ca6b3419008c2b482aff54e66836e8cb4eba2680e42ac5884ae6424fc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://cb57a28e189cd8b05748db44bdd51d608e6f1364dd1b35ad921e1bc82c10631e",
-				"dweb:/ipfs/QmaWWTBbVu2pRR9XUbE4iC159NoP59cRF9ZJwhf4ghFN9i"
+				"bzz-raw://8f9f711fb8d0d92aeea1c327e3845d13ca1fa8f142e47f8723cd5b3106fb29a3",
+				"dweb:/ipfs/QmVQUReDW9f4zGqhizwHnyU8EntMs95tbASdqkGncnikba"
 			]
 		},
 		"openzeppelin-solidity/contracts/math/SafeMath.sol": {
-			"keccak256": "0x3b21f2c8d626de3b9925ae33e972d8bf5c8b1bffb3f4ee94daeed7d0679036e6",
+			"keccak256": "0x9a9cf02622cd7a64261b10534fc3260449da25c98c9e96d1b4ae8110a20e5806",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7f8d45329fecbf0836ad7543330c3ecd0f8d0ffa42d4016278c3eb2215fdcdfe",
-				"dweb:/ipfs/QmXWLT7GcnHtA5NiD6MFi2CV3EWJY4wv5mLNnypqYDrxL3"
+				"bzz-raw://2df142592d1dc267d9549049ee3317fa190d2f87eaa565f86ab05ec83f7ab8f5",
+				"dweb:/ipfs/QmSkJtcfWo7c42KnL5hho6GFxK6HRNV91XABx1P7xDtfLV"
 			]
 		},
 		"openzeppelin-solidity/contracts/token/ERC20/IERC20.sol": {
-			"keccak256": "0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5",
+			"keccak256": "0x5c26b39d26f7ed489e555d955dcd3e01872972e71fdd1528e93ec164e4f23385",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08",
-				"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC"
+				"bzz-raw://efdc632af6960cf865dbc113665ea1f5b90eab75cc40ec062b2f6ae6da582017",
+				"dweb:/ipfs/QmfAZFDuG62vxmAN9DnXApv7e7PMzPqi4RkqqZHLMSQiY5"
 			]
 		},
 		"openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol": {
-			"keccak256": "0xf12dfbe97e6276980b83d2830bb0eb75e0cf4f3e626c2471137f82158ae6a0fc",
+			"keccak256": "0xf3b30f8a49631420635a8c35daacfcaa338012755f18a76fdd118730256f9a27",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b3a849c2d95e85463909e5b5c920b13e7a11216ca14127085e16d22b9379d52a",
-				"dweb:/ipfs/QmUg3CZDbCCcQdroEpexBy5ZFd5vD1UWijWQq9qHZjtJNQ"
+				"bzz-raw://0d7de652204c2ee291a61aa984103dfc7ae4392d651fbbc44a0079caee7c69a3",
+				"dweb:/ipfs/Qmcw1cQnq9eWDnrCBwU3TNyqLfTMUFg5YKpYUkELoMPuUE"
 			]
 		},
 		"openzeppelin-solidity/contracts/utils/Address.sol": {
-			"keccak256": "0xa6a15ddddcbf29d2922a1e0d4151b5d2d33da24b93cc9ebc12390e0d855532f8",
+			"keccak256": "0xf5fa8cbdffa5ef8be49b246b5628facc30b71707e78a45d80d93b64eff3fe390",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7c119bcaecfa853d564ac88d312777f75fa1126a3bca88a3371adb0ad9f35cb0",
-				"dweb:/ipfs/QmY9UPuXeSKq86Zh38fE43VGQPhKMN34mkuFSFqPcr6nvZ"
+				"bzz-raw://774e78a9ff32792cc95db4d2ceaf3a7965bb7f0bea5e6cb7cff182b450d44b37",
+				"dweb:/ipfs/QmRRMC4uj7eAcLW7chynA3sNEYULMFazdLwQHKHQPyzAbA"
 			]
 		},
 		"openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol": {
-			"keccak256": "0x8bbbc2f5c10065ee272592ae0a7a6ceb23de2fbd81564ee0bb015ecf404d5f61",
+			"keccak256": "0x7ff0067f2d7df4187eaa1cb4800949b929602c9d9cb20fcaee6922a7613ef2fb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b95e56c1640d0ef789fc5c16269e141e992f6c8ac97cc6d377bd3825e9cab182",
-				"dweb:/ipfs/QmVzaxJZY51EhagrcNnkxoU6Uq17RhATe7aHvtkC6wUkgK"
+				"bzz-raw://78aa63fd7fbb8df2942b6c6e7bd89349507e306edbd5909ee8d9575c31be57e5",
+				"dweb:/ipfs/Qmf6z9KWKCJCfEVokgTBhBVq5yHtE6is31N8AV5BHdMkqQ"
 			]
 		}
 	},
