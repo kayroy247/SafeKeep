@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   connectApp();
 });
 
-// 3 represents the ID of the ropsten network
-const network = 3;
+// 42 represents the ID of the ropsten network
+const network = 42;
 let web3;
 
 const Notificate = (msg, status, timeout = 3000) => {
@@ -19,7 +19,7 @@ const checkNetwork = async () => {
   const networkId = await web3.eth.net.getId();
 
   if (networkId !== network) {
-    Notificate('Please switch to the Ropsten TestNet and try again', 'warning');
+    Notificate('Please switch to the Kovan TestNet and try again', 'warning');
     return;
   }
   return networkId;
