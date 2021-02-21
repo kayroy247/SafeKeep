@@ -42,6 +42,13 @@ contract SafeKeep is Ownable {
     
     ILendingPool constant lendingPool = ILendingPool(address(0x9FE532197ad76c5a68961439604C037EB79681F0)); // Kovan
     IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x3c73A5E5785cAC854D468F727c606C07488a29D6)); // Kovan
+    address constant multiSig = address(0x0231976737E2D745e4bd523F4e20648E6e8EA9cA); // Multisig address
+
+    modifier onlyMultisig() {
+        require(msg.sender == multiSig, "Not Multisig");
+        _;
+    }
+    
     
     modifier isMinimumDeposit() {
         require((msg.value >= 0.001 ether), "Unsuccessful, The minimum you can deposit is 0.001 ether");
@@ -123,7 +130,7 @@ contract SafeKeep is Ownable {
      * onBehalfOf = address(this)  TODO
      * referralCode = 0;
      */
-     function depositInReserve(address _asset, uint256 _amountToDeposit) public onlyOwner {
+     function depositInReserve(address _asset, uint256 _amountToDeposit) public onlyMultisig {
          IERC20(_asset).safeApprove(address(lendingPool), _amountToDeposit);
          lendingPool.deposit(_asset, _amountToDeposit, address(this), 0);
      }
