@@ -1,13 +1,5 @@
 node_modules/
 ReactFrontend/
-<<<<<<< HEAD
-build/
-.vscode/
-=======
-client/
-
-/.pnp
-.pnp.js
 # testing
 /coverage
 
@@ -24,4 +16,3 @@ client/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
->>>>>>> 4fa2140413e6dd49ab998b1575c93a0edaf4b308

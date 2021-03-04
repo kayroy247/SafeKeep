@@ -22,12 +22,14 @@ contract SafeKeep is Ownable,ReentrancyGuard {
    using SafeERC20 for IERC20;
    
   address[] private assets = new address[](4);
+  address private multiSig;
   
-    constructor() public {
+    constructor(address _multiSig) public {
     assets[0] = address(0xB597cd8D3217ea6477232F9217fa70837ff667Af); // Kovan AAVE
     assets[1] = address(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD); // Kovan DAI
     assets[2] = address(0xbFc12c5c1E2B2EFB608aDcA0AC2d3C330d09f09f); // Kovan iSFP
     assets[3] = address(0x2394cb90FC30EaE5cFdeb49db401368a2aa5188F); // Kovan mDai
+    multiSig = _multiSig;
     }
      
      
@@ -85,6 +87,12 @@ contract SafeKeep is Ownable,ReentrancyGuard {
     //makes sure token is whitelisted
     modifier isWhitelisted(address _target){
         require (_whitelisted[_target]==true,"token not whitelisted");
+        _;
+    }
+
+    //makes sure function is only callable by multisig
+    modifier onlyMultisig() {
+        require(msg.sender == multiSig, "Not Multisig");
         _;
     }
     
@@ -218,7 +226,7 @@ contract SafeKeep is Ownable,ReentrancyGuard {
      * onBehalfOf = address(this)  TODO
      * referralCode = 0;
      */
-     function depositInReserve(address _asset, uint256 _amountToDeposit) public onlyOwner {
+     function depositInReserve(address _asset, uint256 _amountToDeposit) public onlyMultisig {
         //  IERC20(_asset).approve(address(lendingPool), _amountToDeposit);
          lendingPool.deposit(_asset, _amountToDeposit, address(this), 0);
      }
