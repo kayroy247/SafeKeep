@@ -1,0 +1,191 @@
+.dashboard {
+    background: whitesmoke !important;
+    height: 100vh;
+}
+
+.dashboard .uk-navbar-container {
+    width: 100%;
+    background-color: #0f1011 !important;
+    color: #ffffff !important;
+    margin-bottom: 2rem;
+}
+
+.dashboard .uk-navbar-nav>li>a {
+    color: #ffffff !important;
+    text-transform: capitalize !important;
+}
+
+.dashboard .logo {
+    height: 45px;
+    ;
+}
+
+.dashboard .font-size-nav {
+    font-size: 1.5rem !important;
+}
+
+.dashboard .font-size-user {
+    font-size: 1rem !important;
+    min-height: 80px !important;
+    padding: 15px !important;
+}
+
+.dashboard .uk-link,
+a {
+    color: #999999 !important;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px !important;
+}
+
+.dashboard .avatar {
+    height: 40px;
+    border-radius: 50%;
+    width: 40px;
+}
+
+.dashboard .wallet-address {
+    /* width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+}
+
+.dashboard .uk-tooltip {
+    background-color: transparent !important;
+}
+
+.dashboard .uk-navbar-dropdown {
+    left: 100px !important;
+}
+
+.dashboard hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #9999995c;
+    /* old IE */
+    background-color: #9999995c;
+    /* Modern Browsers */
+}
+
+.dashboard .header {
+    font-weight: 400 !important;
+    color: #666 !important;
+}
+
+.dashboard .input-fields {
+    border-radius: 5px !important;
+    background-color: #f6f6f6 !important;
+    height: 50px !important;
+}
+
+.dashboard .uk-link,
+a {
+    color: #999999 !important;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.dashboard .headerButtonSend {
+    color: #ffffff !important;
+    background-color: #023E7D !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    font-size: 18px !important;
+}
+
+.dashboard .headerButtonRequest {
+    color: #ffffff !important;
+    background-color: #7D8597 !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    font-size: 18px !important;
+}
+
+.dashboard .headerButtonHistory {
+    color: #ffffff !important;
+    background-color: #023E7D !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    font-size: 25px !important;
+    padding: 10px 20px 10px 20px !important;
+}
+
+.dashboard .headerButtonTransfer {
+    color: #ffffff !important;
+    background-color: #7D8597 !important;
+    border-radius: 20px !important;
+    text-transform: capitalize !important;
+    font-size: 25px !important;
+    padding: 10px 20px 10px 20px !important;
+}
+
+.dashboard .dashboard-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1060px;
+    border: 1px solid rgba(0, 0, 0, 0.123);
+    height: 83vh;
+}
+
+.dashboard .paddingCards {
+    padding: 0px 40px 0px 40px !important;
+}
+
+.dashboard .uk-card-title {
+    font-size: 25px !important;
+}
+
+.dashboard .uk-card-paragraph {
+    font-size: 20px !important;
+}
+
+.dashboard .balance-card {
+    padding: 20px !important;
+}
+
+.dashboard .user-balance {
+    margin-bottom: -5px;
+}
+
+.dashboard .user-balance-usd {
+    font-size: .8rem !important;
+    color: darkgray;
+}
+
+.dashboard .depWith-button,
+.user-info-button {
+    border-color: black !important;
+    margin: 0 !important;
+}
+
+.dashboard .ping-button {
+    border-color: transparent;
+    background: rgb(133, 219, 5);
+    color: white !important;
+}
+
+.dashboard .depWith-button:nth-child(1) {
+    margin-right: 5px !important;
+}
+
+.dashboard .depWith-button:hover {
+    color: whitesmoke !important;
+    background: black !important;
+}
+
+.dashboard .user-info {
+    font-size: .875rem !important;
+}
+
+@media only screen and (max-width: 640px) {
+    .dashboard uk-grid {
+        display: block !important;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+}

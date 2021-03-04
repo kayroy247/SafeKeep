@@ -1,0 +1,56 @@
+.uk-navbar-container {
+    width: 100%;
+    background-color: #001845 !important;
+    color: #ffffff !important;
+}
+.logo {
+    height: 45px;;
+}
+.uk-navbar-nav>li>a {
+    color: #ffffff !important;
+    text-transform: capitalize !important;
+    font-size: 40px !important;
+}
+hr {
+    width: 30%;
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #9999995c; /* old IE */
+    background-color: #9999995c; /* Modern Browsers */
+}
+.header {
+    font-weight: 500 !important;
+    color: #999 !important;
+}
+.input-fields {
+    border-radius: 5px !important;
+    background-color: #f6f6f6 !important;
+    height: 50px !important;
+}
+.uk-link, a {
+    color: #999999 !important;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.signUpButton {
+    color: #ffffff !important;
+    background-color: #001845 !important;
+    border-radius: 5px !important;
+    width: 20% !important;
+    text-transform: capitalize !important;
+    font-size: 30px !important;
+    height: 6%;
+}
+
+@media only screen and (max-width: 640px) {
+    uk-grid {
+        display: block !important;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+  }

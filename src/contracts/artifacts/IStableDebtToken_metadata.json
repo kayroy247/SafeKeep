@@ -1,0 +1,496 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentBalance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "balanceIncrease",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "avgStableRate",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newTotalSupply",
+						"type": "uint256"
+					}
+				],
+				"name": "Burn",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "onBehalfOf",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "currentBalance",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "balanceIncrease",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newRate",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "avgStableRate",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newTotalSupply",
+						"type": "uint256"
+					}
+				],
+				"name": "Mint",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "delegatee",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approveDelegation",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "fromUser",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "toUser",
+						"type": "address"
+					}
+				],
+				"name": "borrowAllowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "burn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAverageStableRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSupplyData",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint40",
+						"name": "",
+						"type": "uint40"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalSupplyAndAvgRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalSupplyLastUpdated",
+				"outputs": [
+					{
+						"internalType": "uint40",
+						"name": "",
+						"type": "uint40"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserLastUpdated",
+				"outputs": [
+					{
+						"internalType": "uint40",
+						"name": "",
+						"type": "uint40"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserStableRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "onBehalfOf",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rate",
+						"type": "uint256"
+					}
+				],
+				"name": "mint",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "principalBalanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"Burn(address,uint256,uint256,uint256,uint256,uint256)": {
+					"details": "Emitted when new stable debt is burned",
+					"params": {
+						"amount": "The amount being burned",
+						"avgStableRate": "The new average stable rate after the burning",
+						"balanceIncrease": "The the increase in balance since the last action of the user",
+						"currentBalance": "The current balance of the user",
+						"newTotalSupply": "The new total supply of the stable debt token after the action*",
+						"user": "The address of the user"
+					}
+				},
+				"Mint(address,address,uint256,uint256,uint256,uint256,uint256,uint256)": {
+					"details": "Emitted when new stable debt is minted",
+					"params": {
+						"amount": "The amount minted",
+						"avgStableRate": "The new average stable rate after the minting",
+						"balanceIncrease": "The increase in balance since the last action of the user",
+						"currentBalance": "The current balance of the user",
+						"newRate": "The rate of the debt after the minting",
+						"newTotalSupply": "The new total supply of the stable debt token after the action*",
+						"onBehalfOf": "The recipient of stable debt tokens",
+						"user": "The address of the user who triggered the minting"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"approveDelegation(address,uint256)": {
+					"details": "delegates borrowing power to a user on the specific debt token",
+					"params": {
+						"amount": "the maximum amount being delegated. Delegation will still respect the liquidation constraints (even if delegated, a delegatee cannot force a delegator HF to go below 1)*",
+						"delegatee": "the address receiving the delegated borrowing power"
+					}
+				},
+				"balanceOf(address)": {
+					"details": "Calculates the current user debt balance",
+					"returns": {
+						"_0": "The accumulated debt of the user*"
+					}
+				},
+				"borrowAllowance(address,address)": {
+					"details": "returns the borrow allowance of the user",
+					"params": {
+						"fromUser": "The user to giving allowance",
+						"toUser": "The user to give allowance to"
+					},
+					"returns": {
+						"_0": "the current allowance of toUser*"
+					}
+				},
+				"burn(address,uint256)": {
+					"details": "Burns debt of `user` - The resulting rate is the weighted average between the rate of the new debt and the rate of the previous debt",
+					"params": {
+						"amount": "The amount of debt tokens getting burned*",
+						"user": "The address of the user getting his debt burned"
+					}
+				},
+				"getAverageStableRate()": {
+					"details": "Returns the average rate of all the stable rate loans.",
+					"returns": {
+						"_0": "The average stable rate*"
+					}
+				},
+				"getSupplyData()": {
+					"details": "Returns the principal, the total supply and the average stable rate*"
+				},
+				"getTotalSupplyAndAvgRate()": {
+					"details": "Returns the total supply and the average stable rate*"
+				},
+				"getTotalSupplyLastUpdated()": {
+					"details": "Returns the timestamp of the last update of the total supply",
+					"returns": {
+						"_0": "The timestamp*"
+					}
+				},
+				"getUserLastUpdated(address)": {
+					"details": "Returns the timestamp of the last update of the user",
+					"returns": {
+						"_0": "The timestamp*"
+					}
+				},
+				"getUserStableRate(address)": {
+					"details": "Returns the stable rate of the user debt",
+					"returns": {
+						"_0": "The stable rate of the user*"
+					}
+				},
+				"mint(address,address,uint256,uint256)": {
+					"details": "Mints debt token to the `onBehalfOf` address. - The resulting rate is the weighted average between the rate of the new debt and the rate of the previous debt",
+					"params": {
+						"amount": "The amount of debt tokens to mint",
+						"onBehalfOf": "The address receiving the debt tokens",
+						"rate": "The rate of the debt being minted*",
+						"user": "The address receiving the borrowed underlying, being the delegatee in case of credit delegate, or same as `onBehalfOf` otherwise"
+					}
+				},
+				"principalBalanceOf(address)": {
+					"details": "Returns the principal debt balance of the user",
+					"returns": {
+						"_0": "The debt balance of the user since the last burn/mint action*"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/src/contracts/Interfaces.sol": "IStableDebtToken"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/src/contracts/Interfaces.sol": {
+			"keccak256": "0x0f7dc0ba2c1ac4c1481ed7c362b8261ef26c158de958e7a9f0ff5cb43b2ba7c2",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://2153f8e2c94daed1aa61cf2dd29a92bdeb8ce55d9c820fd5683d93b50071470d",
+				"dweb:/ipfs/QmaJhnjXuBqX36iRcqrTL6yoCwZRkfjVtaA8BCt212SNcu"
+			]
+		},
+		"localhost/src/contracts/Libraries.sol": {
+			"keccak256": "0x681dd11b60766003ff82bfb63e3a0f3840d4238a02e935b5759727eb22c5e2be",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://1918b98204622f714a9021b5051a2cca7d250ddcb4f7f7577b0e86d96257c8d4",
+				"dweb:/ipfs/QmVmni8seQTwaRZa4NLgHBCiQeec6TDRd6bcPv5Wr4JLfs"
+			]
+		}
+	},
+	"version": 1
+}
