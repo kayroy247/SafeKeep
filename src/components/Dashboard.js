@@ -7,9 +7,11 @@ import { Blockie } from './Blockies';
 import smartTrim from '../util/smartTrim';
 import SFPModal, { WithdrawForm, DepositForm, UpdateBackup, WithdrawDaiForm, DepositDaiForm } from './Modal';
 
-import SafeKeep from '../contracts/artifacts/SafeKeep.json';
+import SafeKeep from '../contracts/artifacts/safeKeep.json';
 import ERC20 from '../contracts/artifacts/ERC20.json';
 import SFKP from '../contracts/artifacts/SFKP.json';
+import moment from 'moment';
+import '../App.css';
 
 
 
@@ -133,7 +135,9 @@ const Dashboard = () => {
       let bkpAddress = await safeKeep.methods.getBackupAddress().call({ from: userAccount });
       setBkpAddress(bkpAddress)
       let lstPing = await safeKeep.methods.getLastPing().call({ from: userAccount });
-      setLastPing(lstPing);
+      const time = moment.unix(lstPing)
+      const lastPing = time.toString();
+      setLastPing(lastPing);
       let etherBalance = await safeKeep.methods.getBalance().call({ from: userAccount });
       setEthBalance(etherBalance.toString())
       let userInterest = await safeKeep.methods.checkUserInterest().call({ from: userAccount })

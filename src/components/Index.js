@@ -38,7 +38,7 @@ const Home = () => {
               <h1 className="header-main">SafeKeep</h1>
               <h4>Guaranteed storage and safety backup for your Ethereum &<br /> ERC-20 tokens</h4>
               <button onClick={handleConnect} className="uk-button enableEthereumButton uk-button-default">{account.length ? 'Connected' : 'Connect'}</button>
-              <p className="sponsored-by">Built on  <img src="../images/Aave.png" width="55px"  alt="Aave logo"/></p>
+              <p className="sponsored-by">Built on  <img src="../images/eth-diamond-rainbow.png" width="55px"  alt="ethereum logo"/></p>
             </div>
           </div>
           <div className="illus">

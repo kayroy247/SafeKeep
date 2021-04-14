@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import { Blockie } from './Blockies';
 import smartTrim from '../util/smartTrim';
-import SafeKeep from '../contracts/artifacts/SafeKeep.json';
+import SafeKeep from '../contracts/artifacts/safeKeep.json';
 import ERC20 from '../contracts/artifacts/ERC20.json';
 // const LendingPoolV2Artifact = require('@aave/protocol-v2/artifacts/contracts/protocol/lendingpool/LendingPool.sol/LendingPool.json');
 
