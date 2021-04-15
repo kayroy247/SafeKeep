@@ -12,3 +12,9 @@
   align-items: center;
   width: 100%;
 }
+.uk-text-left{
+  width: auto;
+  padding: 0.5rem 2rem;
+  display: flex;
+  justify-content: space-around;
+}
