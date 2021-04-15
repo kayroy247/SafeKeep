@@ -1,44 +1,45 @@
-.uk-navbar-container {
+ .uk-navbar-container {
     width: 100%;
-    background-color: #001845 !important;
+    background-color: #0f1011 !important;
     color: #ffffff !important;
+    margin-bottom: 2rem;
 }
-.uk-navbar-nav>li>a {
+ .uk-navbar-nav>li>a {
     color: #ffffff !important;
     text-transform: capitalize !important;
 }
-.logo {
+ .logo {
     height: 45px;;
 }
-.font-size-nav {
-    font-size: 40px !important;
+ .font-size-nav {
+    font-size: 1.5rem !important;
 }
-.font-size-user {
-    font-size: 20px !important;
+ .font-size-user {
+    font-size: 1rem !important;
 }
-.uk-link, a {
+ .uk-link, a {
     color: #999999 !important;
     text-decoration: none;
     cursor: pointer;
     font-size: 16px !important;
 }
-.avatar {
+ .avatar {
     height: 65px;
     border-radius: 50%;
     width: 65px;
 }
-.wallet-address {
+ .wallet-address {
     width: 250px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.uk-tooltip {
+ .uk-tooltip {
     background-color: transparent !important;
 }
-.uk-navbar-dropdown {
+ .uk-navbar-dropdown {
     left: 100px !important;
 }
-hr {
+ hr {
     width: 100%;
     border: none;
     height: 1px;
@@ -46,16 +47,16 @@ hr {
     color: #9999995c; /* old IE */
     background-color: #9999995c; /* Modern Browsers */
 }
-.header {
+ .header {
     font-weight: 400 !important;
     color: #666 !important;
 }
-.input-fields {
+ .input-fields {
     border-radius: 5px !important;
     background-color: #f6f6f6 !important;
     height: 50px !important;
 }
-.uk-link, a {
+ .uk-link, a {
     color: #999999 !important;
     text-decoration: none;
     cursor: pointer;
@@ -92,16 +93,61 @@ hr {
     padding: 10px 20px 10px 20px !important;
 }
 
+-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1060px;
+    border: 1px solid rgba(0, 0, 0, 0.123);
+    height: 83vh;
+}
+
 .paddingCards {
     padding: 0px 40px 0px 40px !important;
 }
 
 .uk-card-title {
-    font-size: 30px !important;
+    font-size: 25px !important;
 }
 
 .uk-card-paragraph {
     font-size: 20px !important;
+}
+
+.balance-card {
+    padding: 20px !important;
+}
+
+.user-balance {
+    margin-bottom: -5px;
+}
+
+.user-balance-usd {
+    font-size: .8rem !important;
+    color: darkgray;
+}
+
+.depWith-button, .user-info-button {
+    border-color: black !important;
+    margin: 0 !important;
+}
+
+.ping-button {
+    border-color: transparent;
+    background: rgb(133, 219, 5);
+    color: white !important;
+}
+
+.depWith-button:nth-child(1) {
+    margin-right: 5px !important;
+}
+
+.depWith-button:hover {
+    color: whitesmoke !important;
+    background: black !important;
+}
+
+.user-info {
+    font-size: .875rem !important;
 }
 
 @media only screen and (max-width: 640px) {

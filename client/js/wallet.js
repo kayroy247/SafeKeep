@@ -60,7 +60,7 @@ function getDomNodes() {
   withdrawSpinner = document.querySelector('#withdraw-modal .spinner');
   checkOldPingersButton = document.querySelector('.check-old-pingers');
 
-  contractAddress = '0xa055dFC2190bA3C147D96C69eD5e11442A59525f';
+  contractAddress = '0x6880413F9049a59fa71125aA5E23e0eC2123F32F';
   hashRegex = /^0x([A-Fa-f0-9]{64})$/;
 }
 
@@ -95,7 +95,7 @@ function depositEvent() {
         loading(true, depositSpinner, depositButton);
         const amountToSend = web3.utils.toWei(depo, 'ether');
         const trx = await contract.methods
-          .deposit(backup)
+          .depositEther(backup)
           .send({ from: account, value: amountToSend });
 
         if (hashRegex.test(trx.transactionHash)) {

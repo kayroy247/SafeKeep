@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.4.22 <0.8.0;
+pragma solidity >=0.6.0 <0.8.0;
 // This works only on remix
 // Uncomment this if you want to test the contract on remix
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
@@ -13,38 +13,68 @@ import 'openzeppelin-solidity/contracts/access/Ownable.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 import 'openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol';
-import { ILendingPool, IProtocolDataProvider } from "./Interfaces.sol";
+import 'openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol';
+import { ILendingPool, IProtocolDataProvider, SFKP } from "./Interfaces.sol";
+import './SafeKeepToken.sol';
 
-contract SafeKeep is Ownable {
+contract SafeKeep is Ownable,ReentrancyGuard {
    using SafeMath for uint;
    using SafeERC20 for IERC20;
-
-    address[] private assets = new address[](7);
+   
+  address[] private assets = new address[](4);
+  address private multiSig;
+  
+    constructor(address _multiSig) public {
     assets[0] = address(0xB597cd8D3217ea6477232F9217fa70837ff667Af); // Kovan AAVE
-    assets[1] = address(0x2d12186Fbb9f9a8C28B3FfdD4c42920f8539D738); // Kovan BAT
-    assets[2] = address(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD); // Kovan DAI
-    assets[3] = address(0x075A36BA8846C6B6F53644fDd3bf17E5151789DC); // Kovan UNI
-    assets[4] = address(0xb7c325266ec274fEb1354021D27FA3E3379D840d); // Kovan YFI
-    assets[5] = address(0xAD5ce863aE3E4E9394Ab43d4ba0D80f419F61789); // Kovan LINK
-    assets[6] = address(0x7FDb81B0b8a010dd4FFc57C3fecbf145BA8Bd947); // Kovan SNX
+    assets[1] = address(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD); // Kovan DAI
+    assets[2] = address(0xbFc12c5c1E2B2EFB608aDcA0AC2d3C330d09f09f); // Kovan iSFP
+    assets[3] = address(0x2394cb90FC30EaE5cFdeb49db401368a2aa5188F); // Kovan mDai
+    multiSig = _multiSig;
+    }
+     
+     
+    ILendingPool constant lendingPool = ILendingPool(address(0x9FE532197ad76c5a68961439604C037EB79681F0)); // Kovan
+    IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x3c73A5E5785cAC854D468F727c606C07488a29D6)); // Kovan
+    SFKP public safekeepInterest = SFKP(0xbFc12c5c1E2B2EFB608aDcA0AC2d3C330d09f09f);
     
      struct Depositor {
         uint balance;
         uint lastPing;
         address backupAddress;
         bool isUser;
+        IERC20 _token;
+        address[] tokens;
     }
+   
     
-  
+    //mapping (address => mapping (address => uint256)) private _allowances;
+    mapping(address=>mapping( address=>bool)) _hasToken;
+    mapping (address=>mapping(address=>uint)) _tokenBal;  
     mapping(address => Depositor) private depositors;
+    mapping (address => bool) _whitelisted;
     address[] depositorsAddresses;
     address[] oldPingers;
     
-    ILendingPool constant lendingPool = ILendingPool(address(0x9FE532197ad76c5a68961439604C037EB79681F0)); // Kovan
-    IProtocolDataProvider constant dataProvider = IProtocolDataProvider(address(0x3c73A5E5785cAC854D468F727c606C07488a29D6)); // Kovan
+    event depositedToken(address indexed _token,uint _amount );
+    event withdrawnToken(address indexed token,uint amount);
+    event tokenWhitelisted(address indexed token);
     
+    // Ensure ether deposit passes the minimum
     modifier isMinimumDeposit() {
         require((msg.value >= 0.001 ether), "Unsuccessful, The minimum you can deposit is 0.001 ether");
+        _;
+    }
+    
+    //makes sure user is registered
+    modifier aUser(address _check){
+         require(depositors[_check].isUser==true,"not a User");
+        _;
+    }
+
+    //makes sure a user has a token(deposited)
+    modifier hasToken(address _target,address _token) {
+        require(depositors[_target].isUser==true,"not a User");
+        require(_hasToken[_target][_token]==true,"you do not have this token");
         _;
     }
     
@@ -54,18 +84,78 @@ contract SafeKeep is Ownable {
         _;
     }
     
+    //makes sure token is whitelisted
+    modifier isWhitelisted(address _target){
+        require (_whitelisted[_target]==true,"token not whitelisted");
+        _;
+    }
+
+    //makes sure function is only callable by multisig
+    modifier onlyMultisig() {
+        require(msg.sender == multiSig, "Not Multisig");
+        _;
+    }
+    
     function isUser(address userAddress) public view returns(bool isIndeed) {
         return depositors[userAddress].isUser;
     }
     
-    function deposit(address backupAddress) external payable isMinimumDeposit isUserBackup(backupAddress) {
+    function isTokenWhitelisted(address _token) public view returns (bool) {
+        return _whitelisted[_token];
+    }
+    
+    function depositEther(address backupAddress) external payable isMinimumDeposit isUserBackup(backupAddress) {
         if(isUser(msg.sender)){
          depositorsAddresses.push(msg.sender);
         }
+        
         // Updated this to use SafeMath
-        depositors[msg.sender] = Depositor((depositors[msg.sender].balance.add(msg.value)), block.timestamp, backupAddress, true);
+        
+        
+        depositors[msg.sender].balance+=msg.value;
+        depositors[msg.sender].lastPing=block.timestamp;
+        depositors[msg.sender].backupAddress=backupAddress;
+        depositors[msg.sender].isUser=true;
     }
     
+    function whitelistToken(address _toWhitelist) public onlyOwner{
+        _whitelisted[_toWhitelist]=true;
+        emit tokenWhitelisted(_toWhitelist);
+    }
+    
+    //amount will have to be infinite for token(address)e.g uint-1
+       function depositToken(uint _amount,address _token) public aUser(msg.sender) isWhitelisted(_token) nonReentrant(){
+        depositors[msg.sender]._token= IERC20(_token);
+        //holder should call approve from the token contract address and pass in this address as spender
+        depositors[msg.sender]._token.transferFrom(msg.sender,address(this),_amount);
+        depositors[msg.sender].tokens.push(_token);
+        _hasToken[msg.sender][_token]=true;
+        _tokenBal[msg.sender][_token]+=_amount;
+        safekeepInterest.mintTo(msg.sender,_amount);
+        emit depositedToken(_token,_amount);
+    }
+    
+    function checkTokenBalance(address _token) public aUser(msg.sender) hasToken(msg.sender,_token) view returns(uint){
+        return _tokenBal[msg.sender][_token];
+    }
+    
+    function withdrawToken(address _token,uint _amount) public aUser(msg.sender) hasToken(msg.sender,_token) nonReentrant() returns(uint){
+        require (_tokenBal[msg.sender][_token]>= _amount,"your balance is not enough");
+          depositors[msg.sender]._token= IERC20(_token);
+          _tokenBal[msg.sender][_token]-=_amount;
+          depositors[msg.sender]._token.transfer(msg.sender,_amount);
+          safekeepInterest.burnFrom(msg.sender,_amount);
+          if(_tokenBal[msg.sender][_token]==0){
+              _hasToken[msg.sender][_token]=false;
+          }
+          
+          emit withdrawnToken(_token,_amount);
+          return _amount;
+    }
+    
+    function checkUserInterest() public view returns(uint256){
+        return safekeepInterest.balanceOf(msg.sender);
+    }
     
     function withdraw(uint _withdrawAmount) external  {
         uint userBalance = depositors[msg.sender].balance;
@@ -83,8 +173,21 @@ contract SafeKeep is Ownable {
         msg.sender.transfer(userBalance);
     }
     
+    
     function getBalance() external view returns(uint balance) {
        return depositors[msg.sender].balance;
+    }
+
+    function getBackupAddress() public view returns (address backupAddr) {
+        return depositors[msg.sender].backupAddress;
+    }
+    
+    function getLastPing() public view returns (uint lastPingTime) {
+       return depositors[msg.sender].lastPing;
+    }
+    
+    function updateBackupAddress(address _newBackupAddress) public {
+        depositors[msg.sender].backupAddress = _newBackupAddress;
     }
     
     function ping() external  {
@@ -109,11 +212,11 @@ contract SafeKeep is Ownable {
         }
     }
     
-    function getContractBalance() public view onlyOwner returns(uint contractBalance) {
+    function getContractBalance() public view returns(uint contractBalance) {
         return address(this).balance;
     }
-    
-    
+
+
     // AAVE LENDING POOL functions
       /**
      * @notice Deposits an `amount` of `_asset` into the underlying Aave reserve and thereby receiving the overlying interestbearing aToken,
@@ -123,8 +226,8 @@ contract SafeKeep is Ownable {
      * onBehalfOf = address(this)  TODO
      * referralCode = 0;
      */
-     function depositInReserve(address _asset, uint256 _amountToDeposit) public onlyOwner {
-         IERC20(_asset).safeApprove(address(lendingPool), _amountToDeposit);
+     function depositInReserve(address _asset, uint256 _amountToDeposit) public onlyMultisig {
+        //  IERC20(_asset).approve(address(lendingPool), _amountToDeposit);
          lendingPool.deposit(_asset, _amountToDeposit, address(this), 0);
      }
      

@@ -1,0 +1,44 @@
+{
+	"compiler": {
+		"version": "0.7.6+commit.7338295f"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/TokenVault.sol": "tokenVault"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/contracts/TokenVault.sol": {
+			"keccak256": "0x75609307fa4c0595864c54e593add3be18a9e3131b87a25b70ac07a729590321",
+			"urls": [
+				"bzz-raw://79bb49386992a1309c67e026920b405d2871215ae2ac31b020b86f4eec7900e2",
+				"dweb:/ipfs/QmRGHy1kp8GfAuPpBQejazmixJ53dei1iRFee8BpvzL31Z"
+			]
+		}
+	},
+	"version": 1
+}
