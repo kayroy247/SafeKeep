@@ -1,9 +1,5 @@
 node_modules/
 ReactFrontend/
-client/
-
-/.pnp
-.pnp.js
 # testing
 /coverage
 

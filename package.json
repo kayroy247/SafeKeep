@@ -10,6 +10,9 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+<<<<<<< HEAD
+    "openzeppelin-solidity": "^3.4.0"
+=======
     "@aave/protocol-v2": "^1.0.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -44,6 +47,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+>>>>>>> 4fa2140413e6dd49ab998b1575c93a0edaf4b308
   },
   "devDependencies": {
     "lite-server": "^2.6.1"
